@@ -6,6 +6,7 @@ function drawMap() {
     };
     const map = new google.maps.Map(document.getElementById("map_space"), mapOptions);
 
+    // load GeoJSON from file (found at https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/)
     fetch('/week_04/resources/coal_uk.geojson')
         .then(response => response.json())
         .then(data => {
