@@ -45,7 +45,7 @@ function drawMap() {
             infoWindowMolde.close();
         }, 2000);
     });
-    polygonHeart.setMap(map);
+    polygonHeart.setMap(null);
 
 
     // Draw a an arrow pointing to where I work
@@ -61,7 +61,7 @@ function drawMap() {
         strokeOpacity: 0.8,
         strokeWeight: 3,
     });
-    line.setMap(map);
+    line.setMap(null);
 
 
     // Adding a circle marker to indicate where i live
@@ -73,7 +73,7 @@ function drawMap() {
         fillOpacity: 0.5,
         map: map,
     });
-    pointMarker.setMap(map);
+    pointMarker.setMap(null);
     var infoWindowHome = new google.maps.InfoWindow({
         content: 'This is where I live, in Norway.',
         headerDisabled: true
@@ -85,6 +85,21 @@ function drawMap() {
         setTimeout(() => {
             infoWindowHome.close();
         }, 2000);
+    });
+
+    // Button to toggle heart, arrow and point visibility
+    const moldeButton = document.getElementById("toggle_molde");
+    moldeButton.addEventListener("click", () => {
+        const isHidden = polygonHeart.getMap() === null;
+        polygonHeart.setMap(isHidden ? map : null);
+        pointMarker.setMap(isHidden ? map : null);
+        line.setMap(isHidden ? map : null);
+        moldeButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
+
+        if (!isHidden) {
+            map.setZoom(9);
+            map.setCenter({ lat: 62.73547927593037, lng: 7.156011858986631 });
+        }
     });
 
 
