@@ -2,12 +2,19 @@ function drawMap() {
     const mapOptions = {
         center: { lat: 62.73547927593037, lng: 7.156011858986631 }, // Molde, Norway
         zoom: 9,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        
+        disableDefaultUI: true,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.TOP_RIGHT
+        }, 
+        streetViewControl: false,
+
     };
     const map = new google.maps.Map(document.getElementById("map_space"), mapOptions);
 
     // Draw a heart-shaped polygon around Molde
-    const polygon = new google.maps.Polygon({
+    const polygonHeart = new google.maps.Polygon({
         path: [
             { lat: 62.65, lng: 7.2 },
             { lat: 62.75, lng: 7.375 },
@@ -31,14 +38,14 @@ function drawMap() {
         headerDisabled: true
 
     });
-    polygon.addListener('click', (event) => {
+    polygonHeart.addListener('click', (event) => {
         infoWindowMolde.setPosition(event.latLng);
         infoWindowMolde.open(map);
         setTimeout(() => {
             infoWindowMolde.close();
         }, 2000);
     });
-    polygon.setMap(map);
+    polygonHeart.setMap(map);
 
 
     // Draw a an arrow pointing to where I work
@@ -80,6 +87,31 @@ function drawMap() {
         }, 2000);
     });
 
+
+    // Norwegian border outline
+    const goeJsonNorwayBorder = "/googleMapsApi/resources/norway.geojson";
+    const goeJsonNorwayBorderLayer = new google.maps.Data();
+    goeJsonNorwayBorderLayer.loadGeoJson(goeJsonNorwayBorder);
+    goeJsonNorwayBorderLayer.setStyle({
+        fillColor: 'transparent',
+        strokeColor: '#ff9354ff',
+        strokeWeight: 1,
+    });
+    goeJsonNorwayBorderLayer.setMap(null); // Start with layer hidden
+    
+    // Button to toggle Norway border visibility
+    const norwayButton = document.getElementById("toggle_norway");
+    norwayButton.addEventListener("click", () => {
+        const isVisible = goeJsonNorwayBorderLayer.getMap() !== null;
+        goeJsonNorwayBorderLayer.setMap(isVisible ? null : map);
+        norwayButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
+        
+        // show the inteire layer when enabling
+        if (!isVisible) {
+            map.setZoom(4);
+            map.setCenter({ lat: 64.5, lng: 12.0 });
+        }   
+    });
 }
 
 // Check if the Google Maps API has loaded before adding the map
