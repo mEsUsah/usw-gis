@@ -90,13 +90,13 @@ function drawMap() {
     // Button to toggle heart, arrow and point visibility
     const moldeButton = document.getElementById("toggle_molde");
     moldeButton.addEventListener("click", () => {
+        moldeButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
         const isHidden = polygonHeart.getMap() === null;
         polygonHeart.setMap(isHidden ? map : null);
         pointMarker.setMap(isHidden ? map : null);
         line.setMap(isHidden ? map : null);
-        moldeButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
 
-        if (!isHidden) {
+        if (isHidden) {
             map.setZoom(9);
             map.setCenter({ lat: 62.73547927593037, lng: 7.156011858986631 });
         }
@@ -117,12 +117,12 @@ function drawMap() {
     // Button to toggle Norway border visibility
     const norwayButton = document.getElementById("toggle_norway");
     norwayButton.addEventListener("click", () => {
-        const isVisible = goeJsonNorwayBorderLayer.getMap() !== null;
-        goeJsonNorwayBorderLayer.setMap(isVisible ? null : map);
         norwayButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
+        const isHidden = goeJsonNorwayBorderLayer.getMap() === null;
+        goeJsonNorwayBorderLayer.setMap(isHidden ? map : null);
         
-        // show the inteire layer when enabling
-        if (!isVisible) {
+        // show the inteire outline when activating
+        if (isHidden) {
             map.setZoom(4);
             map.setCenter({ lat: 64.5, lng: 12.0 });
         }   
