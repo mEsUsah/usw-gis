@@ -22,6 +22,7 @@ function drawMap() {
         .then(data => {
             const features = getGeoJsonFeatures(data);
             dataFeatureColors = getFeatureColors(features);
+            addLegend(dataFeatureColors);
             map.data.addGeoJson(data);
         });
 
@@ -74,6 +75,28 @@ function getFeatureColors(features){
         };
     });
     return output;
+}
+
+function addLegend(featureColors){
+    const legendElement = document.querySelector('[data-coal-legend]');
+
+    for(const featureName in featureColors){
+        const colorInfo = featureColors[featureName];
+
+        const listItem = document.createElement('li');
+        listItem.classList.add('flex', 'items-center', 'gap-2', 'mb-1');
+        const colorBox = document.createElement('span');
+        colorBox.classList.add('w-2', 'h-2', 'inline-block', 'border');
+        colorBox.style.borderColor = colorInfo.outline;
+        colorBox.style.backgroundColor = colorInfo.color;
+
+        const label = document.createElement('span');
+        label.textContent = featureName;
+
+        listItem.appendChild(colorBox);
+        listItem.appendChild(label);
+        legendElement.appendChild(listItem);
+    }
 }
 
 if (typeof google === 'object' && typeof google.maps === 'object') {
