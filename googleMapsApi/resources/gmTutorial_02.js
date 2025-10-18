@@ -12,10 +12,11 @@ function drawMap() {
         mapTypeControlOptions: {
             mapTypeIds: [
                 google.maps.MapTypeId.ROADMAP,
+                'noLandscapeMapType',
                 'evilMapType',
             ],
             position: google.maps.ControlPosition.TOP_LEFT,
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+            // style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
         },
 
         // enable zoom control
@@ -49,13 +50,28 @@ function drawMap() {
             "stylers": [
                 { "color": "#ffff00" }
             ]
-        }
+        },
     ];
     var styledMapType = new google.maps.StyledMapType(evilStyle, {
         map: map,
-        name: 'Evil AF'
+        name: 'Evil Overlord'
     });
     map.mapTypes.set('evilMapType', styledMapType);
+
+    var noLandscapeStyle = [
+        {
+            "featureType": "landscape",
+            "elementType": "geometry",
+            "stylers": [
+                { "visibility": "off" }
+            ]
+        },
+    ];
+    var noLandscapeMapType = new google.maps.StyledMapType(noLandscapeStyle, {
+        map: map,
+        name: 'No landscape'
+    });
+    map.mapTypes.set('noLandscapeMapType', noLandscapeMapType);
 
 
     // Reusable marker icon and shape
