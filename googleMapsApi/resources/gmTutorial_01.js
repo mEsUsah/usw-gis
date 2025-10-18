@@ -2,7 +2,9 @@ function drawMap() {
     const mapOptions = {
         center: { lat: 59.9139, lng: 10.7522 }, // Oslo, Norway
         zoom: 7,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true,
+        zoomControl: true,
     };
     const map = new google.maps.Map(document.getElementById("map_space"), mapOptions);
 }
