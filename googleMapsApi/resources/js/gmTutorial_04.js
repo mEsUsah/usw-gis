@@ -5,11 +5,14 @@ function drawMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     const map = new google.maps.Map(document.getElementById("map_space"), mapOptions);
+    let dataFeatureColors = {};
 
     // load GeoJSON from file (found at https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/)
     fetch('resources/geodata/coal_uk.geojson')
         .then(response => response.json())
         .then(data => {
+            const features = getGeoJsonFeatures(data);
+            dataFeatureColors = getFeatureColors(features);
             map.data.addGeoJson(data);
         });
 
@@ -20,16 +23,34 @@ function drawMap() {
     // add colors to all features
     map.data.setStyle((feature) => {
         const featureName = feature.getProperty('FEATURE');
-        let color = 'red';
-        if (featureName === 'Coal bearing strata at surface') {
-            color = 'yellow';
-        }
         return {
-            fillColor: color,
-            strokeColor: 'black',
+            fillColor: dataFeatureColors[featureName]?.color || 'red',
+            strokeColor: dataFeatureColors[featureName]?.outline || 'black',
             strokeWeight: 1
         };
     });
+}
+
+function getGeoJsonFeatures(geoJsonData){
+    let features = [];
+    geoJsonData.features.forEach((feature) => {
+        if(!features.includes(feature.properties.FEATURE)){
+            features.push(feature.properties.FEATURE);
+        }
+    });
+    return features;
+}
+
+function getFeatureColors(features){
+    let output = {};
+    Array.prototype.forEach.call(features, (feature, index) => {
+        const hue = index * (360 / features.length);
+        output[feature] = { 
+            color: `hsl(${hue}, 100%, 50%)`,
+            outline: `hsl(${hue}, 100%, 30%)`
+        };
+    });
+    return output;
 }
 
 if (typeof google === 'object' && typeof google.maps === 'object') {
