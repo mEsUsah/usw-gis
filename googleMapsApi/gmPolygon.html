@@ -16,7 +16,7 @@
         </div>
     </header>
     <main class="m-4 lg:m-8 flex-grow">
-        <h1 class="text-lg lg:text-2xl font-medium">Tutorial 3.1</h1>
+        <h1 class="text-lg lg:text-2xl font-medium">Tutorial 3</h1>
         <p>Google Maps API and Polygon data</p>
         <section class="relative">
             <div id="map_space" class="w-full h-120"></div>
@@ -30,6 +30,18 @@
                     <span class="text-inherit">Molde</span>
                 </button>
             </div>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium">Drawing on the map</h2>
+            <p>On the map above I have demonstrated the use of a polygon, line and circle to draw shapes on the map. Click the button labeled "Molde" to toggle the visibility of these shapes.
+                The toggle switch will change color to indicate the current state, and when it is turned on, the map will zoom to fit the shapes, and center the map on the Molde area.</p>
+            <p>By clicking on the polygon and circle shape a info window will breafly appear showing information about the locations.</p>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium">GeoJSON Data</h2>
+            <p>The map also demonstrates the use of GeoJSON data to represent geographical features. By clicking on the button labeled "Norway outline", you will toggle the visibility of a GeoJSON shape outlining Norway.
+                This data is loaded from a GeoJSON file and displayed on the map.</p>
+            <p>The GeoJSON file was created by loading a KML file into QGIS and exporting it as GeoJSON.</p>
         </section>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG2mOZt7pEZwRUuwF5j6zrL7Zre23dhWg&libraries=maps"></script>
     </main>

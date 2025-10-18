@@ -1,8 +1,20 @@
 function drawMap() {
+    const moldeCoordinates = {
+        lat: 62.73547927593037, 
+        lng: 7.156011858986631
+    };
+    const moldeZoom = 9;
+
+    const norwayCoordinates = {
+        lat: 64.5,
+        lng: 12.0
+ };
+    const norwayZoom = 4;
+    
     const mapOptions = {
-        center: { lat: 62.73547927593037, lng: 7.156011858986631 }, // Molde, Norway
-        zoom: 9,
-        
+        center: moldeCoordinates, // Molde, Norway
+        zoom: moldeZoom,
+
         disableDefaultUI: true,
         zoomControl: true,
         zoomControlOptions: {
@@ -96,9 +108,10 @@ function drawMap() {
         pointMarker.setMap(isHidden ? map : null);
         line.setMap(isHidden ? map : null);
 
+        
         if (isHidden) {
-            map.setZoom(9);
-            map.setCenter({ lat: 62.73547927593037, lng: 7.156011858986631 });
+            map.setCenter(moldeCoordinates);
+            map.setZoom(moldeZoom);
         }
     });
 
@@ -121,10 +134,10 @@ function drawMap() {
         const isHidden = goeJsonNorwayBorderLayer.getMap() === null;
         goeJsonNorwayBorderLayer.setMap(isHidden ? map : null);
         
-        // show the inteire outline when activating
+        // Zoom and pan to Norway when activating
         if (isHidden) {
-            map.setZoom(4);
-            map.setCenter({ lat: 64.5, lng: 12.0 });
+            map.setZoom(norwayZoom);
+            map.setCenter(norwayCoordinates);
         }   
     });
 }
