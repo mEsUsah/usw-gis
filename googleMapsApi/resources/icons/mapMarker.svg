@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"
+    version="1.1" viewBox="0 0 1273 1920"
+    height="50"
+>
+    <path
+        d="m653.54 143.43c-292.64 0-529.87 237.23-529.87 529.87 0 116.88 37.87 224.89 101.97 312.51l427.9 690.23 427.9-690.23c64.099-87.617 101.97-195.63 101.97-312.51-1e-3 -292.64-237.23-529.87-529.87-529.87z"
+        fill="#DE0832" />
+    <path />
+    <path d="M550 850 L734 850 L770 374 L514 374 Z" fill="white" stroke="none" stroke-width="2"></path>
+    <path d="M550 950 L734 950 L734 1130 L550 1130 Z" fill="white" stroke="none" stroke-width="2"></path>
+</svg>
