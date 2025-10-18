@@ -24,9 +24,15 @@
         <section class="relative">
             <div id="map_space" class="w-full h-120"></div>
             <div class="border border-gray-300 pl-2">
-                <h3 class="font-medium text-lg">Legend</h3>
+                <h3 class="font-medium">Legend</h3>
                 <ul data-coal-legend></ul>
             </div>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium ">GeoJSON</h2>
+            <p>The map demostrates the use of GeoJSON data that contains a set of polygons classified by feature types. 
+                These feature types are dynamically assigned a unique color that is helpful to quickly visually identify what resource is where on the map. The same data was used to dynamically build a legend for the map.</p>
+            <p class="mt-2">The dataset containing coal resources was acquired from the British Geological Survey (<a href="https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/" class="text-[#DE0832] hover:underline">link</a>) as a shapefile that was cleaned and converted to GeoJSON using QGIS.</p>
         </section>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG2mOZt7pEZwRUuwF5j6zrL7Zre23dhWg&libraries=maps"></script>
     </main>
