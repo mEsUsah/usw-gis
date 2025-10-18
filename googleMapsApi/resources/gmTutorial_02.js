@@ -1,8 +1,8 @@
 function drawMap() {
     // Create a map
     const mapOptions = {
-        center: { lat: 51.47806, lng: 3.1825 }, // Zeebrugge, Belgium
-        zoom: 8,
+        center: { lat: 51.58824060534598, lng: -3.330762301389285 }, // USW Trefforest Accommodation
+        zoom: 17,
         // remove buttons that are not needed
         disableDefaultUI: true,
 
@@ -11,13 +11,13 @@ function drawMap() {
         mapTypeControl: true,
         mapTypeControlOptions: {
             mapTypeIds: [
-                google.maps.MapTypeId.ROADMAP, 
-                'evilMapType', 
+                google.maps.MapTypeId.ROADMAP,
+                'evilMapType',
             ],
             position: google.maps.ControlPosition.TOP_LEFT,
             style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
         },
-        
+
         // enable zoom control
         zoomControl: true,
         zoomControlOptions: {
@@ -51,35 +51,41 @@ function drawMap() {
             ]
         }
     ];
-    var styledMapType = new google.maps.StyledMapType(evilStyle,{
-      map: map,
-      name: 'Evil AF'
+    var styledMapType = new google.maps.StyledMapType(evilStyle, {
+        map: map,
+        name: 'Evil AF'
     });
     map.mapTypes.set('evilMapType', styledMapType);
 
-    
+
     // Add a marker
     var mkrOpt = {
-        position: new google.maps.LatLng(51.0, 3.1825),
+        position: new google.maps.LatLng(51.58824060534598, -3.330762301389285),
         icon: 'resources/icons/mapMarker.svg',
-        title: 'Look, a marker!',
         shape: {
-            coords: [12.5,12.5,20],
+            coords: [12.5, 12.5, 20],
             type: 'circle'
-            
+
         },
         map: map,
     }
     var mkr = new google.maps.Marker(mkrOpt);
 
     // Add an info window to the marker
-    var infoWindowOpts = { 
-      content: '<a href="https://en.wikipedia.org/wiki/' +
-                'Liberty_Stadium">Liberty Stadium</a>' 
-    };
-    var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
-    mkr.addListener('click', function() {
-        infoWindow.open(map, mkr);
+    var infoWindowAccommodations = new google.maps.InfoWindow({
+        content: '<div class="flex flex-row">' +
+            '<img src="/googleMapsApi/resources/images/sincerely-media-ssDczX9Fbek-unsplash.jpg" alt="View from the student accommodation" class="h-20 mr-4"/>' +
+            '<div>' +
+                '<p><strong>USW Accommodations</strong></p>' +
+                '<p>Pen Y Fan</p>' +
+                '<br>' +
+                '<p>This is where I live</p>' +
+            '</div>' +
+            '</div>' +
+            '<p class="mt-4"><a href="https://www.southwales.ac.uk/accommodation" style="text-decoration: underline;">Read more about the accommodations</a></p>'
+    });
+    mkr.addListener('click', function () {
+        infoWindowAccommodations.open(map, mkr);
     });
 }
 
