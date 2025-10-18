@@ -2,7 +2,16 @@ function drawMap() {
     const mapOptions = {
         center: {lat:52.0, lng:-3.0 }, // England, UK
         zoom: 7,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        
+        // remove buttons that are not needed
+        disableDefaultUI: true,
+        
+        // enable zoom control
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.TOP_RIGHT
+        },
     };
     const map = new google.maps.Map(document.getElementById("map_space"), mapOptions);
     let dataFeatureColors = {};
@@ -29,6 +38,19 @@ function drawMap() {
             strokeWeight: 1
         };
     });
+
+    // add info window on click 
+    const infoWindow = new google.maps.InfoWindow();
+    infoWindow.setHeaderDisabled(true);
+    map.data.addListener('click', (event) => {
+        const featureName = event.feature.getProperty('FEATURE');
+        infoWindow.setContent(featureName);
+        infoWindow.setPosition(event.latLng);
+        infoWindow.setMap(map);
+        setTimeout(() => {
+            infoWindow.close();
+        }, 3000);
+    });
 }
 
 function getGeoJsonFeatures(geoJsonData){
@@ -46,6 +68,7 @@ function getFeatureColors(features){
     Array.prototype.forEach.call(features, (feature, index) => {
         const hue = index * (360 / features.length);
         output[feature] = { 
+            name: feature,
             color: `hsl(${hue}, 100%, 50%)`,
             outline: `hsl(${hue}, 100%, 30%)`
         };
