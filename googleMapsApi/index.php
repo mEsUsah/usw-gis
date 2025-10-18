@@ -20,6 +20,9 @@
             <p class="text-md lg:text-xl">Google Maps API</p>
         </div>
     </header>
+    <nav class="m-4 lg:my-4 lg:mx-8">
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / Google Maps API
+    </nav>
     <main class="m-4 lg:m-8 flex-grow">
         <h2 class="text-lg lg:text-2xl font-medium">Tutorials</h2>
         <p class=" mb-4">Tutorials and coursework during my USW studies autumn 2025</p>
