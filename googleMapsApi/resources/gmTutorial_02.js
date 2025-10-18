@@ -16,7 +16,7 @@ function drawMap() {
                 'evilMapType',
             ],
             position: google.maps.ControlPosition.TOP_LEFT,
-            // style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
         },
 
         // enable zoom control
