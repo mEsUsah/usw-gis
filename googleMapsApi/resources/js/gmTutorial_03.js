@@ -117,7 +117,7 @@ function drawMap() {
 
 
     // Norwegian border outline
-    const goeJsonNorwayBorder = "/googleMapsApi/resources/norway.geojson";
+    const goeJsonNorwayBorder = "/googleMapsApi/resources/geodata/norway.geojson";
     const goeJsonNorwayBorderLayer = new google.maps.Data();
     goeJsonNorwayBorderLayer.loadGeoJson(goeJsonNorwayBorder);
     goeJsonNorwayBorderLayer.setStyle({
