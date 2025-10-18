@@ -19,7 +19,7 @@
         <h2 class="text-lg lg:text-2xl font-medium">Tutorials</h2>
         <p class=" mb-4">Tools discussed during my USW studies autumn 2025</p>
         <ul>
-            <li>🎯<a href="/googleMapsApi" class="text-[#DE0832] hover:underline">Google Maps API</a></li>
+            <li>📁<a href="/googleMapsApi" class="text-[#DE0832] hover:underline">Google Maps API</a></li>
         </ul>
 
     </main>
