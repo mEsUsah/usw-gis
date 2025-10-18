@@ -61,11 +61,12 @@ function drawMap() {
     // Add a marker
     var mkrOpt = {
         position: new google.maps.LatLng(51.0, 3.1825),
-        icon: 'resources/icons/flag2.png',
+        icon: 'resources/icons/mapMarker.svg',
         title: 'Look, a marker!',
         shape: {
-            coords: [1,2, 18,3, 18,14, 5,14, 5,24, 1,24],
-            type: 'poly'
+            coords: [12.5,12.5,20],
+            type: 'circle'
+            
         },
         map: map,
     }
