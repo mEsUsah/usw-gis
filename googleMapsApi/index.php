@@ -9,12 +9,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USW GIS | Google Maps API</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="w-full max-w-4xl mx-auto flex flex-col h-screen">
     <header class="flex flex-row gap-4 lg:gap-8 items-center">
-        <img src="/favicon.svg" alt="Logo for USW coursework by Stanley Skarshaug" class="h-24 lg:h-32">
+        <img src="/resources/icons/favicon.svg" alt="Logo for USW coursework by Stanley Skarshaug" class="h-24 lg:h-32">
         <div class="pr-2">
             <h1 class="text-xl lg:text-4xl font-medium">GIS and the Spatial Web</h1>
             <p class="text-md lg:text-xl">Google Maps API</p>

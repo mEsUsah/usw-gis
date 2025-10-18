@@ -76,7 +76,7 @@ function drawMap() {
 
     // Reusable marker icon and shape
     const markerIcon = {
-        icon: 'resources/icons/mapMarker.svg',
+        icon: '/resources/icons/mapMarker.svg',
         shape: {
             coords: [12.5, 12.5, 20],
             type: 'circle'
