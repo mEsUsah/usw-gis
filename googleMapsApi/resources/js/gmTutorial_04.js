@@ -1,12 +1,15 @@
 function drawMap() {
     const mapOptions = {
-        center: {lat:52.0, lng:-3.0 }, // England, UK
+        center: { 
+            lat: 52.0, 
+            lng: -3.0 
+        },
         zoom: 7,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        
+
         // remove buttons that are not needed
         disableDefaultUI: true,
-        
+
         // enable zoom control
         zoomControl: true,
         zoomControlOptions: {
@@ -59,28 +62,75 @@ function drawMap() {
         const featureName = event.feature.getProperty('FEATURE');
         infoWindow.setContent(featureName);
         infoWindow.setPosition(event.latLng);
+        infoWindow.setOptions({ pixelOffset: null}); // reset offset
         infoWindow.setMap(map);
         setTimeout(() => {
             infoWindow.close();
         }, 3000);
     });
+
+
+    // Eearthquake data from Blackboard
+    const earthquakeLayer = new google.maps.Data();
+    fetch('resources/geodata/2012_earthquakes_mag5.geojson')
+        .then(response => response.json())
+        .then(data => {
+            earthquakeLayer.addGeoJson(data);
+            earthquakeLayer.setMap(null);
+        });
+
+
+    // Reusable marker icon and shape
+    const markerIcon = {
+        icon: '/resources/icons/mapMarker.svg',
+        shape: {
+            coords: [12.5, 12.5, 20],
+            type: 'circle'
+        }
+    };
+
+    // style for earthquake points
+    earthquakeLayer.setStyle(markerIcon);
+
+    // add info window on click to earthquake points
+    earthquakeLayer.addListener('click', (event) => {
+        const data = event.feature.getProperty('Name');
+        const time = event.feature.getProperty('id');
+        let magnitude = data.split(' - ')[0];
+        let place = data.split(', ')[1];
+        infoWindow.setContent(`<strong>${magnitude}: ${place}</strong><br/><span style="text-align:center;">${time}</span>`);
+        infoWindow.setPosition(event.latLng);
+        infoWindow.setOptions({ pixelOffset: new google.maps.Size(0, -45) }); // set position above marker
+        infoWindow.setMap(map);
+        setTimeout(() => {
+            infoWindow.close();
+        }, 5000);
+    });
+
+    // Button to toggle Earthquake visibility
+    const earthquakeButton = document.getElementById("toggle_earthquakes");
+    earthquakeButton.addEventListener("click", () => {
+        earthquakeButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
+        const isHidden = earthquakeLayer.getMap() === null;
+        earthquakeLayer.setMap(isHidden ? map : null);
+    });
 }
 
-function getGeoJsonFeatures(geoJsonData){
+function getGeoJsonFeatures(geoJsonData) {
     let features = [];
     geoJsonData.features.forEach((feature) => {
-        if(!features.includes(feature.properties.FEATURE)){
+        if (!features.includes(feature.properties.FEATURE)) {
             features.push(feature.properties.FEATURE);
         }
     });
     return features;
 }
 
-function getFeatureColors(features){
+function getFeatureColors(features) {
     let output = {};
     Array.prototype.forEach.call(features, (feature, index) => {
         const hue = index * (360 / features.length);
-        output[feature] = { 
+        output[feature] = {
             name: feature,
             color: `hsl(${hue}, 100%, 50%)`,
             outline: `hsl(${hue}, 100%, 30%)`
@@ -89,10 +139,10 @@ function getFeatureColors(features){
     return output;
 }
 
-function addLegend(featureColors){
+function addLegend(featureColors) {
     const legendElement = document.querySelector('[data-coal-legend]');
 
-    for(const featureName in featureColors){
+    for (const featureName in featureColors) {
         const colorInfo = featureColors[featureName];
 
         const listItem = document.createElement('li');
