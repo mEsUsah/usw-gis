@@ -14,6 +14,7 @@ function drawMap() {
         },
     };
     const map = new google.maps.Map(document.getElementById("map_space"), mapOptions);
+    const coalLayer = new google.maps.Data();
     let dataFeatureColors = {};
 
     // load GeoJSON from file (found at https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/)
@@ -23,15 +24,26 @@ function drawMap() {
             const features = getGeoJsonFeatures(data);
             dataFeatureColors = getFeatureColors(features);
             addLegend(dataFeatureColors);
-            map.data.addGeoJson(data);
+            coalLayer.addGeoJson(data);
+            coalLayer.setMap(null);
         });
 
     map.data.addListener('click', (event) => {
         console.log(event.feature.getProperty('FEATURE'));
     });
 
+    // Button to toggle Coal resources visibility
+    const coalButton = document.getElementById("toggle_coal");
+    const coalLegendContainer = document.querySelector('[data-coal-legend-container]');
+    coalButton.addEventListener("click", () => {
+        coalButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
+        const isHidden = coalLayer.getMap() === null;
+        coalLayer.setMap(isHidden ? map : null);
+        coalLegendContainer.classList.toggle("hidden", !isHidden);
+    });
+
     // add colors to all features
-    map.data.setStyle((feature) => {
+    coalLayer.setStyle((feature) => {
         const featureName = feature.getProperty('FEATURE');
         return {
             fillColor: dataFeatureColors[featureName]?.color || 'red',
@@ -43,7 +55,7 @@ function drawMap() {
     // add info window on click 
     const infoWindow = new google.maps.InfoWindow();
     infoWindow.setHeaderDisabled(true);
-    map.data.addListener('click', (event) => {
+    coalLayer.addListener('click', (event) => {
         const featureName = event.feature.getProperty('FEATURE');
         infoWindow.setContent(featureName);
         infoWindow.setPosition(event.latLng);
