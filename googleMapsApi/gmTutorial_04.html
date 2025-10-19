@@ -26,7 +26,7 @@
             <div class="flex flex-row gap-2 absolute top-2 left-2">
                 <button id="toggle_coal" class="flex flex-row justify-between items-center gap-2 bg-white text-gray-700 hover:text-black cursor-pointer py-2 px-4 shadow-lg">
                     <span data-indicator="" class="h-[8px] w-[8px] border border-black rounded"></span>
-                    <span class="text-black-200">Coal resources </span>
+                    <span class="text-black-200">UK Coal resources </span>
                 </button>
                 <button id="toggle_earthquakes" class="flex flex-row justify-between items-center gap-2 bg-white text-gray-700 hover:text-black cursor-pointer py-2 px-4 shadow-lg">
                     <span data-indicator="" class="h-[8px] w-[8px] border border-black rounded"></span>
@@ -40,15 +40,17 @@
         </section>
         <section>
             <h2 class="mt-4 font-medium ">GeoJSON</h2>
-            <p>The map demostrates the use of GeoJSON data that contains a set of polygons classified by feature types. 
-                These feature types are dynamically assigned a unique color that is helpful to quickly visually identify what resource is where on the map. The same data was used to dynamically build a legend for the map.</p>
+            <p>The map demostrates the use of two GeoJSON datasets. One contains a set of polygons classified by feature types. 
+                These feature types are dynamically assigned a unique color that is helpful to quickly visually identify what resource is where on the map. The same data was used also to dynamically build a legend for the map.</p>
+            <p class="mt-2">The other dataset contains a set of registered earthquakes. These datapoints are added to the map using custom markers. When clicking on the markers, an info window appears on the map showing more details about the earthquake.</p>
             <p class="mt-2">The dataset containing coal resources was acquired from the British Geological Survey (<a href="https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/" class="text-[#DE0832] hover:underline">link</a>) as a shapefile that was cleaned and converted to GeoJSON using QGIS.</p>
+            <p class="mt-2">The earthquake dataset was provided by USW on blackboard as a KML file. This file was first converted to a shapefile, then some of the data was removed before it finally was converted to GeoJSON.</p>
         </section>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG2mOZt7pEZwRUuwF5j6zrL7Zre23dhWg&libraries=maps"></script>
     </main>
     <footer class="bg-[#DE0832] text-white py-8">
         <p class="text-center">USW coursework by Stanley Skarshaug</p>
     </footer>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDG2mOZt7pEZwRUuwF5j6zrL7Zre23dhWg&libraries=maps"></script>
     <script src="resources/js/gmTutorial_04.js"></script>
 </body>
 </html>
