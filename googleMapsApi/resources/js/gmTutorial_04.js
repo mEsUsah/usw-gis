@@ -114,6 +114,44 @@ function drawMap() {
         const isHidden = earthquakeLayer.getMap() === null;
         earthquakeLayer.setMap(isHidden ? map : null);
     });
+
+    // Railroad data
+    const railroadLayer = new google.maps.Data();
+    railroadLayer.setStyle({
+        strokeColor: '#8B4513',
+        strokeWeight: 2
+    });
+    railroadLayer.addListener('click', (event) => {
+        const name = event.feature.getProperty('name');
+        infoWindow.setContent(name);
+        infoWindow.setPosition(event.latLng);
+        infoWindow.setMap(map);
+        setTimeout(() => {
+            infoWindow.close();
+        }, 3000);
+    });
+
+    fetch('resources/geodata/railways_uk.geojson')
+        .then(response => response.json())
+        .then(data => {
+            railroadLayer.addGeoJson(data);
+            railroadLayer.setMap(null);
+        }); 
+    
+    // Button to toggle Railroad visibility
+    const railroadButton = document.getElementById("toggle_railroads");
+    railroadButton.addEventListener("click", () => {
+        railroadButton.querySelector("[data-indicator]").classList.toggle("bg-[#05ce00]");
+        railroadButton.querySelector("[data-indicator]").classList.add("animate-ping");
+        setTimeout(() => {
+            const isHidden = railroadLayer.getMap() === null;
+            railroadLayer.setMap(isHidden ? map : null);
+        }, 500);
+        setTimeout(() => {
+            railroadButton.querySelector("[data-indicator]").classList.remove("animate-ping");
+        }, 500);
+        
+    });
 }
 
 function getGeoJsonFeatures(geoJsonData) {
