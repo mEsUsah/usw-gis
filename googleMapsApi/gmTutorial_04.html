@@ -44,11 +44,15 @@
         </section>
         <section>
             <h2 class="mt-4 font-medium ">GeoJSON</h2>
-            <p>The map demostrates the use of two GeoJSON datasets. One contains a set of polygons classified by feature types. 
-                These feature types are dynamically assigned a unique color that is helpful to quickly visually identify what resource is where on the map. The same data was used also to dynamically build a legend for the map.</p>
-            <p class="mt-2">The other dataset contains a set of registered earthquakes. These datapoints are added to the map using custom markers. When clicking on the markers, an info window appears on the map showing more details about the earthquake.</p>
-            <p class="mt-2">The dataset containing coal resources was acquired from the British Geological Survey (<a href="https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/" class="text-[#DE0832] hover:underline">link</a>) as a shapefile that was cleaned and converted to GeoJSON using QGIS.</p>
-            <p class="mt-2">The earthquake dataset was provided by USW on blackboard as a KML file. This file was first converted to a shapefile, then some of the data was removed before it finally was converted to GeoJSON.</p>
+            <p>The map demostrates the use of three GeoJSON datasets. One contains a set of polygons classified by feature types. 
+                These feature types are dynamically assigned a unique color that is helpful to quickly visually identify what resource is where on the map. The same data was used also to dynamically build a legend for the map. 
+                The coal resources dataset was acquired from the British Geological Survey (<a href="https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/" class="text-[#DE0832] hover:underline">link</a>) 
+                as a shapefile that was cleaned and converted to GeoJSON using QGIS.</p>
+            <p class="mt-2">The second dataset contains railroads in the UK. This dataset was aquired from the Humanitarian OpenStreetMap Team  (<a href="https://data.humdata.org/dataset/hotosm_gbr_railways" class="text-[#DE0832] hover:underline">link</a>).
+                This dataset was also cleaned from unwanted informaton. To reduce the filesize the dataset was simplified to a tolerance of 100m before it was exported to GeoJSON. 
+                Since it takes a noticable amount of time to toggle the large dataset on the map, a simple loading animation was added to make the users understand that something is happening while they wait.</p>
+            <p class="mt-2">The third dataset contains a set of registered earthquakes. These datapoints are added to the map using custom markers. When clicking on the markers, an info window appears on the map showing more details about the earthquake.
+                This dataset was provided by USW on blackboard as a KML file. This file was first converted to a shapefile, then some of the data was removed before it finally was converted to GeoJSON.</p>
         </section>
     </main>
     <footer class="bg-[#DE0832] text-white py-8">
