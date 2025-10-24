@@ -101,63 +101,44 @@ function drawMap() {
     );
 
 
-    // Reusable marker icon and shape
-    const markerIcon = {
-        icon: '/resources/icons/mapMarker.svg',
-        shape: {
-            coords: [12.5, 12.5, 20],
-            type: 'circle'
-        }
-    }
-
+    // Custom markers for CW2 --- START HERE ---
     // Add a marker for the accommodations
-    var mrkAccommodations = new google.maps.Marker({
-        position: new google.maps.LatLng(51.58824060534598, -3.330762301389285),
-        icon: markerIcon.icon,
-        shape: markerIcon.shape,
-        map: map,
-    });
     var accommodationsHeaderContent = document.createElement('strong');
     accommodationsHeaderContent.appendChild(document.createTextNode('Trefforest Student Accommodation'));
     accommodationsHeaderContent.classList.add('text-md');
-    var infoWindowAccommodations = new google.maps.InfoWindow({
-        headerContent: accommodationsHeaderContent,
-        content: '<div class="flex flex-row">' +
+    var accommodationsContent = '<div class="flex flex-row">' +
             '<img src="/googleMapsApi/resources/images/sincerely-media-ssDczX9Fbek-unsplash.jpg" alt="View from the student accommodation" class="h-20 mr-4"/>' +
             '<p>This is where I live.</p>' +
             '</div>' +
-            '<p class="mt-4"><a href="https://www.southwales.ac.uk/accommodation" style="text-decoration: underline;">Read more about the accommodations</a></p>'
-    });
-    mrkAccommodations.addListener('click', function () {
-        infoWindowAccommodations.open(map, mrkAccommodations);
-    });
+            '<p class="mt-4"><a href="https://www.southwales.ac.uk/accommodation" style="text-decoration: underline;">Read more about the accommodations</a></p>';
+
+    var mrkAccommodations = createMarkerCustom(
+        new google.maps.LatLng(51.58824060534598, -3.330762301389285),
+        'Trefforest Student Accommodation',
+        accommodationsHeaderContent,
+        accommodationsContent,
+        map
+    );
     
     
     // Add a marker for the lecuture building
-    var mrkLectures = new google.maps.Marker({
-        position: new google.maps.LatLng(51.590087207305864, -3.3293570813571094),
-        icon: markerIcon.icon,
-        shape: markerIcon.shape,
-        map: map,
-    });
     var lectureHeaderContent = document.createElement('strong');
     lectureHeaderContent.appendChild(document.createTextNode('USW Building'));
     lectureHeaderContent.classList.add('text-md');
-    var infoWindowLectures = new google.maps.InfoWindow({
-        headerContent: lectureHeaderContent,
-        content: '<div class="flex flex-row">' +
+    var leactureContent = '<div class="flex flex-row">' +
             '<img src="/googleMapsApi/resources/images/nathan-dumlao-xPHmmVKS8lM-unsplash.jpg" alt="View from the student accommodation" class="h-20 mr-4"/>' +
             '<p>This is where most of my lectures are.</p>' +
             '</div>' +
-            '<p class="mt-4"><a href="https://www.southwales.ac.uk/courses/bsc-hons-computing/" style="text-decoration: underline;">Read more about the study program</a></p>'
-    });
-    mrkLectures.addListener('click', function () {
-        infoWindowLectures.open(map, mrkLectures);
-    });
+            '<p class="mt-4"><a href="https://www.southwales.ac.uk/courses/bsc-hons-computing/" style="text-decoration: underline;">Read more about the study program</a></p>';
 
-    map.addListener('click', function (event) {
-        console.log("Map clicked at: " + event.latLng.toString());
-    });
+    var mrkLecture = createMarkerCustom(
+        new google.maps.LatLng(51.590087207305864, -3.3293570813571094),
+        'USW Building',
+        lectureHeaderContent,
+        leactureContent,
+        map
+    );
+    // Custom markers for CW2 --- END HERE ---
 }
 
 function createMarker(point, title, icon, iconShape, info, map) {
@@ -170,6 +151,34 @@ function createMarker(point, title, icon, iconShape, info, map) {
     };
     var marker = new google.maps.Marker(markerOpts);
     var infoWindowOpts = {content: info};
+    var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
+        google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.open(map,marker);
+    });
+    return marker;
+}
+
+function createMarkerCustom(point, title, header, content, map) {
+    const markerIcon = {
+        icon: '/resources/icons/mapMarker.svg',
+        shape: {
+            coords: [12.5, 12.5, 20],
+            type: 'circle'
+        }
+    }
+    
+    var markerOpts = {
+        title: title,
+        position: point,
+        icon: markerIcon.icon,
+        shape: markerIcon.shape,
+        map: map
+    };
+    var marker = new google.maps.Marker(markerOpts);
+    var infoWindowOpts = {
+        headerContent: header,
+        content: content
+    };
     var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
         google.maps.event.addListener(marker, 'click', function() {
         infoWindow.open(map,marker);
