@@ -25,7 +25,7 @@
     </nav>
     <main class="m-4 lg:m-8 flex-grow">
         <h2 class="text-lg lg:text-2xl font-medium">Tutorials</h2>
-        <p class=" mb-4">Tutorials and coursework during my USW studies autumn 2025</p>
+        <p class=" mb-4">Result from tutorials and coursework during my studies at the University of South Wales 2025/2026</p>
         <ul>
             <?php
                 foreach ($files as $file) {
