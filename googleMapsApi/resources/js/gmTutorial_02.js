@@ -74,6 +74,33 @@ function drawMap() {
     map.mapTypes.set('noLandscapeMapType', noLandscapeMapType);
 
 
+
+    // Tutorial marker
+    var flagIcon = '/resources/icons/flag2.png';
+    var flagShape = {
+        coords: [1,2, 18,3, 18,14, 5,14, 5,24, 1,24],
+        type: 'poly'
+    };
+
+    var marker1 = createMarker(
+        new google.maps.LatLng(51.478056, -3.1825), 
+        'Principality Stadium', 
+        flagIcon, 
+        flagShape, 
+        '<a href="https://en.wikipedia.org/wiki/Millennium_Stadium">Principality Stadium</a>', 
+        map
+    );
+
+    var marker2 = createMarker(
+        new google.maps.LatLng(51.6422, -3.9351), 
+        'Swansea.com Stadium', 
+        flagIcon, 
+        flagShape, 
+        '<a href="https://en.wikipedia.org/wiki/Liberty_Stadium">Liberty Stadium</a>', 
+        map
+    );
+
+
     // Reusable marker icon and shape
     const markerIcon = {
         icon: '/resources/icons/mapMarker.svg',
@@ -131,6 +158,23 @@ function drawMap() {
     map.addListener('click', function (event) {
         console.log("Map clicked at: " + event.latLng.toString());
     });
+}
+
+function createMarker(point, title, icon, iconShape, info, map) {
+    var markerOpts = {
+        title: title,
+        position: point,
+        icon: icon,
+        shape: iconShape,
+        map: map
+    };
+    var marker = new google.maps.Marker(markerOpts);
+    var infoWindowOpts = {content: info};
+    var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
+        google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.open(map,marker);
+    });
+    return marker;
 }
 
 if (typeof google === 'object' && typeof google.maps === 'object') {
