@@ -7,7 +7,8 @@ map1 = new ol.Map({
     }),
     layers: [
         new ol.layer.Tile({
-            source: new ol.source.OSM()
+            source: new ol.source.OSM(),
+            zIndex: 1,
         })
     ],
     target: 'map_space'
@@ -19,6 +20,7 @@ var geoJSONLayer = new ol.layer.Vector({
         format: new ol.format.GeoJSON(),
         url: 'https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson'
     }),
+    zIndex: 2,
     opacity: 0.5,
     style: new ol.style.Style({
         stroke: new ol.style.Stroke({
