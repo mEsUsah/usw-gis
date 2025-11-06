@@ -61,3 +61,19 @@ var bngLayer = new ol.layer.Image({
     opacity: 0.5,
 })
 map1.addLayer(bngLayer);
+
+// Norway border GeoJSON overlay (same as in Google Maps example)
+var norwayGeoJSONLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        format: new ol.format.GeoJSON(),
+        url: '/googleMapsApi/resources/geodata/norway.geojson'
+    }),
+    zIndex: 5,
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: '#a454ffff',
+            width: 2
+        }),
+    })
+});
+map1.addLayer(norwayGeoJSONLayer);
