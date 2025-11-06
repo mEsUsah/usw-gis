@@ -12,3 +12,19 @@ map1 = new ol.Map({
     ],
     target: 'map_space'
 });
+
+
+var geoJSONLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        format: new ol.format.GeoJSON(),
+        url: 'https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson'
+    }),
+    opacity: 0.5,
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'red',
+            width: 1
+        })
+    })
+});
+map1.addLayer(geoJSONLayer);
