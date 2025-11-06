@@ -15,12 +15,25 @@ map1 = new ol.Map({
 });
 
 
+var wmsLayer = new ol.layer.Image({
+    source: new ol.source.ImageWMS({
+        url: 'https://ahocevar.com/geoserver/wms',
+        params: {
+            'LAYERS': 'topp:states'
+        },
+    }),
+    zIndex: 2,
+    opacity: 0.5,
+});
+map1.addLayer(wmsLayer);
+
+
 var geoJSONLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
         format: new ol.format.GeoJSON(),
         url: 'https://openlayers.org/en/v4.6.5/examples/data/geojson/countries.geojson'
     }),
-    zIndex: 2,
+    zIndex: 3,
     opacity: 0.5,
     style: new ol.style.Style({
         stroke: new ol.style.Stroke({
