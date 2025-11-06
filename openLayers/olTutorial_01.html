@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial 1 - Introduction</title>
+    <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
+    <link href="resources/css/ol.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="w-full max-w-4xl mx-auto flex flex-col h-screen">
+    <header class="flex flex-row gap-4 lg:gap-8 items-center">
+        <img src="/resources/icons/favicon.svg" alt="Logo for USW coursework by Stanley Skarshaug" class="h-24 lg:h-32">
+        <div class="pr-2">
+            <p class="text-xl lg:text-4xl font-medium">GIS and the Spatial Web</p>
+            <p class="text-md lg:text-xl">OpenLayers</p>
+        </div>
+    </header>
+    <nav class="m-4 lg:my-4 lg:mx-8">
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/openLayers/" class="text-[#DE0832] hover:underline">OpenLayers</a> / Tutorial 1
+    </nav>
+    <main class="m-4 lg:m-8 flex-grow">
+        <section>
+            <h1 class="text-lg lg:text-2xl font-medium">Tutorial 1</h1>
+            <p>Introducing OpenLayers</p>
+            <div id="map_space" class="w-full h-120"></div>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium">Basic OpenLayers integration</h2>
+            <p >The map above demonstrates a basic OpenLayers integration where the map is centered on a specific location and zoomed to a specific level. In addition, only a subset of the default map controls are activated.</p>
+        </section>
+    </main>
+    <footer class="bg-[#DE0832] text-white py-8">
+        <p class="text-center">USW coursework by Stanley Skarshaug</p>
+    </footer>
+    <script src="resources/js/ol.js"></script>
+    <script src="resources/js/olTutorial_01.js"></script>
+</body>
+</html>

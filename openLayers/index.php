@@ -1,9 +1,14 @@
+<?php
+    require __DIR__ . '/../scripts/getHtmlFiles.php';
+    $files = getHtmlFiles(__DIR__);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USW GIS | Home</title>
+    <title>USW GIS | Open Layers</title>
     <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -12,17 +17,24 @@
         <img src="/resources/icons/favicon.svg" alt="Logo for USW coursework by Stanley Skarshaug" class="h-24 lg:h-32">
         <div class="pr-2">
             <h1 class="text-xl lg:text-4xl font-medium">GIS and the Spatial Web</h1>
-            <p class="text-md lg:text-xl">Home / Overview</p>
+            <p class="text-md lg:text-xl">OpenLayers</p>
         </div>
     </header>
+    <nav class="m-4 lg:my-4 lg:mx-8">
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / OpenLayers
+    </nav>
     <main class="m-4 lg:m-8 flex-grow">
         <h2 class="text-lg lg:text-2xl font-medium">Tutorials</h2>
-        <p class=" mb-4">Tools discussed during my studies at the University of South Wales 2025/2026</p>
+        <p class=" mb-4">Result from tutorials and coursework during my studies at the University of South Wales 2025/2026</p>
         <ul>
-            <li>📁<a href="/googleMapsApi" class="text-[#DE0832] hover:underline">Google Maps API</a></li>
-            <li>📁<a href="/openLayers" class="text-[#DE0832] hover:underline">OpenLayers</a></li>
+            <?php
+                foreach ($files as $file) {
+                ?>
+                    <li>🎯<a href="<?php echo $file['file']; ?>" class="text-[#DE0832] hover:underline"><?php echo $file['title']; ?></a></li>
+                <?php
+                }
+            ?>
         </ul>
-
     </main>
     <footer class="bg-[#DE0832] text-white py-8">
         <p class="text-center">USW coursework by Stanley Skarshaug</p>
