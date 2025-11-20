@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial 1 - Introduction</title>
+    <title>Hiking in Norway</title>
     <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -19,17 +19,19 @@
         </div>
     </header>
     <nav class="m-4 lg:my-4 lg:mx-8">
-        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/leaflet/" class="text-[#DE0832] hover:underline">Leaflet</a> / Tutorial 1
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/leaflet/" class="text-[#DE0832] hover:underline">Leaflet</a> / Hiking in Norway
     </nav>
     <main class="m-4 lg:m-8 flex-grow">
         <section>
-            <h1 class="text-lg lg:text-2xl font-medium">Tutorial 1</h1>
-            <p>Introducing Leaflet</p>
+            <h1 class="text-lg lg:text-2xl font-medium">Hiking in Norway</h1>
+            <p>Simple map for planning hiking trips in Norway</p>
+        </section>
+        <section class="relative">
             <div id="map_space" class="w-full h-120"></div>
         </section>
         <section>
-            <h2 class="mt-4 font-medium">Basic Leaflet integration</h2>
-            <p >The map above demonstrates a basic Leaflet integration where the map is centered on a specific location and zoomed to a specific level. In addition, only a subset of the default map controls are activated.</p>
+            <h2 class="mt-4 font-medium">Leaflet integration</h2>
+            <p >The map above demonstrates demonstrates a basic Leaflet integration of WMS services provided by the Norwegian government about hiking and skiing trails.</p>
         </section>
     </main>
     <footer class="bg-[#DE0832] text-white py-8">
@@ -38,6 +40,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
-    <script src="resources/js/leafletTutorial_01.js"></script>
+    <script src="resources/js/hiking.js"></script>
 </body>
 </html>
