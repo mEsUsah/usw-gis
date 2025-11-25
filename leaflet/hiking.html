@@ -24,14 +24,17 @@
     <main class="m-4 lg:m-8 flex-grow">
         <section>
             <h1 class="text-lg lg:text-2xl font-medium">Hiking in Norway</h1>
-            <p>Simple map for planning hiking trips in Norway</p>
+            <p>A map for planning hiking trips in Møre og Romsdal, Norway</p>
         </section>
         <section class="relative">
             <div id="map_space" class="w-full h-120"></div>
         </section>
         <section>
             <h2 class="mt-4 font-medium">Leaflet integration</h2>
-            <p >The map above demonstrates demonstrates a basic Leaflet integration of WMS services provided by the Norwegian government about hiking and skiing trails.</p>
+            <p class="mt-2">The map above demonstrates demonstrates a map for planning short and long hiking trips. This map is the same that is used for printing hiking maps by the Norwegian Mapping Authority.</p>
+            <p class="mt-2">The map includes overlays for glaciers, avalanche risk, hiking trails that are color graded, and ski tours that are color graded, sourced from various Norwegian government WMS services.</p>
+            <p class="mt-2">It also features points of interest such as shelters and open cabins, and a hiking route that was sourced from the state sponsored hiking trip database morotur.no.</p>
+            <p class="mt-2">The map also includes a control that allows the user to center the map at their current location using the <a href="https://github.com/rhlt/leaflet-geolet?tab=readme-overview" class="text-[#DE0832] hover:underline">Geolet</a> plugin for Leaflet.</p>
         </section>
     </main>
     <footer class="bg-[#DE0832] text-white py-8">
@@ -40,6 +43,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
+        <script src="resources/js/geolet.js"></script>
     <script src="resources/js/hiking.js"></script>
 </body>
 </html>

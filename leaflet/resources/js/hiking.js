@@ -1,15 +1,20 @@
 const moldeCoordinates = {
-        lat: 62.73547927593037, 
-        lng: 7.156011858986631
+        lat: 62.76, 
+        lng: 7.156
     };
-    const moldeZoom = 11;
+    const moldeZoom = 12;
 
 
 var map = L.map('map_space', {
     'zoomControl': false,
 })
-map.setView(moldeCoordinates, moldeZoom); // Molde, Norway
+// Set initial view to Molde, Norway
+map.setView(moldeCoordinates, moldeZoom);
 
+// Add geolet control (shows user's current location)
+L.geolet({ position: 'bottomright' }).addTo(map);
+
+// Add zoom control to bottom right
 L.control.zoom({
     position: 'bottomright'
 }).addTo(map);
@@ -82,23 +87,60 @@ const mapOverlays = [
             format: "image/png",
             attribution: '&copy; <a href="https://www.kartverket.no/">Kartverket</a>'
         }),
-        'name': 'Ski tour, unprepared'
-    }
+        'name': 'Ski tour (unprepared)'
+    },
 ];
 
-// Use openstreetmap by default
-mapLayers.find(layerObj => layerObj.name === 'OpenStreetMap').layer.addTo(map);
+// Use Topographic Map (Hiking map) by default
+mapLayers.find(layerObj => layerObj.name === 'Topographic Map (Hiking map)').layer.addTo(map);
 
-
+// Add the built-in layer control
 const layerControl = L.control.layers();
 layerControl.addTo(map);
 
-// Add layers to layer control
+// Add layers
 mapLayers.forEach((layerObj) => {
     layerControl.addBaseLayer(layerObj.layer, layerObj.name);
 });
 
-// Add overlays to layer control
+// Add overlays
 mapOverlays.forEach((overlayObj) => {
     layerControl.addOverlay(overlayObj.layer, overlayObj.name);
 });
+
+// GeoJSON hiking route: Frænavarden, Molde, Møre og Romsdal, Norway
+const geoJSONroute = fetch('/leaflet/resources/geodata/franavarden.geojson') // https://morotur.no/tur/fraenavarden
+    .then(response => response.json())
+    .then(data => {
+        const routeLayer = L.geoJSON(data, {
+            style: {
+                color: 'blue',
+                weight: 2,
+                opacity: 0.7
+            },
+            attribution: '<a href="https://morotur.no/">Morotur.no</a>'
+        });
+        layerControl.addOverlay(routeLayer, 'Hiking Route: Frænavarden');
+    });
+
+
+// Add points from morotur
+const poiLayer = L.layerGroup();
+layerControl.addOverlay(poiLayer, 'Shelters and open cabins');
+const pois = fetch('/leaflet/resources/geodata/poi.json')
+    .then(response => response.json())
+    .then(data => {
+        data.poi.forEach((poi) => {
+            const marker = L.marker([poi.lat, poi.lng],{
+                icon: L.icon({
+                    iconUrl: `/resources/icons/hikingMarker.svg#${poi.type}`,
+                    iconSize: [32, 37],
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37],
+                })
+            });
+            marker.bindPopup(`<b>${poi.name}</b><br>${poi.desc}`);
+            poiLayer.addLayer(marker);
+        });
+    });
+        
