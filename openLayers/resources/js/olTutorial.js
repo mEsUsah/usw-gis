@@ -179,7 +179,7 @@ heatmapLayerButton.element().addEventListener('click', function() {
 buttonWrapper.addButton(heatmapLayerButton.element());
 
 
-const moveToMoscowButton = new OlButton('Moscow');
+const moveToMoscowButton = new OlButton('Moscow', false);
 moveToMoscowButton.element().addEventListener('click', function() {
     map.getView().animate({
         center: ol.proj.fromLonLat([37.6173, 55.7558], 'EPSG:3857'), // Moscow

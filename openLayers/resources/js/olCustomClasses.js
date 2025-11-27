@@ -1,8 +1,9 @@
 class OlButton {
     static indicatorActiveClass = 'bg-[#05ce00]';
     
-    constructor(text) {
+    constructor(text, statusIndicator = true) {
         this.isActive = false;
+        this.statusIndicator = statusIndicator;
         
         this.buttonElement = document.createElement('button');
         this.buttonElement.className = 'ol-button';
@@ -12,10 +13,12 @@ class OlButton {
         this.buttonElement.style.display = 'flex';
         this.buttonElement.classList.add('flex-row', 'items-center', 'gap-2');
 
-        this.buttonIcon = document.createElement('span');
-        this.buttonIcon.setAttribute('data-indicator', '');
-        this.buttonIcon.classList.add('h-[8px]', 'w-[8px]', 'border', 'border-white', 'rounded');
-        this.buttonElement.appendChild(this.buttonIcon);
+        if (this.statusIndicator) {
+            this.buttonIcon = document.createElement('span');
+            this.buttonIcon.setAttribute('data-indicator', '');
+            this.buttonIcon.classList.add('h-[8px]', 'w-[8px]', 'border', 'border-white', 'rounded');
+            this.buttonElement.appendChild(this.buttonIcon);
+        }
 
         this.buttonTextElement = document.createElement('span');
         this.buttonTextElement.innerHTML = text;
@@ -28,12 +31,16 @@ class OlButton {
     }
 
     off(){
-        this.buttonIcon.classList.remove(OlButton.indicatorActiveClass);
+        if (this.statusIndicator) {
+            this.buttonIcon.classList.remove(OlButton.indicatorActiveClass);
+        }
         this.isActive = false;
     }
     
     on(){
-        this.buttonIcon.classList.add(OlButton.indicatorActiveClass);
+        if (this.statusIndicator) {
+            this.buttonIcon.classList.add(OlButton.indicatorActiveClass);
+        }
         this.isActive = true;
     }
 }
