@@ -9,6 +9,19 @@ map1 = new ol.Map({
         new ol.layer.Tile({
             source: new ol.source.OSM(),
             zIndex: 1,
+        }),
+        new ol.layer.Heatmap({
+            title: 'Earthquakes heatmap',
+            source: new ol.source.Vector({
+                url: 'https://openlayers.org/en/v4.6.5/examples/data/kml/2012_Earthquakes_Mag5.kml',
+                format: new ol.format.KML({
+                    extractStyles: false
+                })
+            }),
+            blur: 15,
+            radius: 4,
+            zIndex: 2,
+            gradient: ['#0f0','#ff0', '#f00']
         })
     ],
     target: 'map_space'
