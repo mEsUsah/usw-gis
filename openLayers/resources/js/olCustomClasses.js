@@ -39,7 +39,7 @@ class OlButtonWrapper {
         this.wrapperElement = document.createElement('div');
         this.wrapperElement.classList.add('ol-unselectable', 'ol-control', 'flex', 'flex-row');
         this.wrapperElement.style.top = '0.5em';
-        this.wrapperElement.style.right = '0.5em';
+        this.wrapperElement.style.left = '0.5em';
         this.wrapperElement.style.position = 'absolute';
     }
 

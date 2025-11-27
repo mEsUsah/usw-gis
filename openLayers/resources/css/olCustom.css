@@ -1,0 +1,7 @@
+/* Position zoom control to bottom-right */
+.ol-zoom {
+    bottom: 2.5em !important;
+    right: 0.5em !important;    
+    top: auto !important;      
+    left: auto !important;
+}
