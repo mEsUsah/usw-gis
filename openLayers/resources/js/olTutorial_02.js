@@ -2,8 +2,8 @@
 map1 = new ol.Map({
     view: new ol.View({
         // https://openlayers.org/en/v4.6.5/apidoc/ol.proj.html#.fromLonLat
-        center: ol.proj.fromLonLat([10.7522, 59.9139], 'EPSG:3857'), // Oslo, Norway, Google maps CRS
-        zoom: 7
+        center: ol.proj.fromLonLat([116.5, 6.0], 'EPSG:3857'), // Borneo
+        zoom: 4
     }),
     layers: [
         new ol.layer.Tile({
@@ -19,9 +19,8 @@ map1 = new ol.Map({
                 })
             }),
             blur: 15,
-            radius: 4,
-            zIndex: 2,
-            gradient: ['#0f0','#ff0', '#f00']
+            radius: 5,
+            zIndex: 2
         })
     ],
     target: 'map_space'
