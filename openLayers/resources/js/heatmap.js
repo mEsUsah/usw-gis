@@ -1,39 +1,10 @@
-class olButton {
-    constructor(buttonText) {
-
-    }
-}
-
-let buttonElement = document.createElement('button');
-buttonElement.className = 'ol-button';
-buttonElement.style.width = 'fit-content';
-buttonElement.style.padding = '0 0.5rem';
-buttonElement.style.height = '2rem';
-buttonElement.style.display = 'flex';
-buttonElement.classList.add('flex-row', 'items-center', 'gap-2', );
-
-let indicatorActiveClass = 'bg-[#05ce00]';
-let buttonIcon = document.createElement('span');
-buttonIcon.setAttribute('data-indicator', '');
-buttonIcon.classList.add('h-[8px]', 'w-[8px]', 'border', 'border-white', 'rounded');
-buttonIcon.classList.add(indicatorActiveClass);
-buttonElement.appendChild(buttonIcon);
-
-
-let buttonTextElement = document.createElement('span');
-buttonTextElement.innerHTML = 'Heatmap';
-buttonTextElement.classList.add('text-sm');
-buttonElement.appendChild(buttonTextElement);
-
-let buttonWrapper = document.createElement('div');
-buttonWrapper.appendChild(buttonElement);
-buttonWrapper.className = 'ol-unselectable ol-control';
-buttonWrapper.style.top = '0.5em';
-buttonWrapper.style.right = '0.5em';
-buttonWrapper.style.position = 'absolute';
+const buttonWrapper = new OlButtonWrapper();
+const button = new OlButton('Heatmap');
+button.on(); // Set initial state to "on"
+buttonWrapper.addButton(button.element());
 
 const control = new ol.control.Control({
-    element: buttonWrapper
+    element: buttonWrapper.element()
 });
 
 const map = new ol.Map({
@@ -68,15 +39,14 @@ const map = new ol.Map({
 });
 
 // Button event listener to toggle heatmap layer
-buttonElement.addEventListener('click', function () {
-    const indicator = buttonElement.querySelector('[data-indicator]');
+button.element().addEventListener('click', function () {
     map.getLayers().forEach(function (layer) {
         if (layer.get('name') === "heatmapLayer" && layer.getVisible()) {
             layer.setVisible(false);
-            indicator.classList.remove(indicatorActiveClass);
+            button.off();
         } else if (layer.get('name') === "heatmapLayer" && !layer.getVisible()) {
             layer.setVisible(true);
-            indicator.classList.add(indicatorActiveClass);
+            button.on();
         }
     });
 });
