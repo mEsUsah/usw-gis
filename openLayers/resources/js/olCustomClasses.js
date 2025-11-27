@@ -2,6 +2,8 @@ class OlButton {
     static indicatorActiveClass = 'bg-[#05ce00]';
     
     constructor(text) {
+        this.isActive = false;
+        
         this.buttonElement = document.createElement('button');
         this.buttonElement.className = 'ol-button';
         this.buttonElement.style.width = 'fit-content';
@@ -27,10 +29,12 @@ class OlButton {
 
     off(){
         this.buttonIcon.classList.remove(OlButton.indicatorActiveClass);
+        this.isActive = false;
     }
     
     on(){
         this.buttonIcon.classList.add(OlButton.indicatorActiveClass);
+        this.isActive = true;
     }
 }
 
