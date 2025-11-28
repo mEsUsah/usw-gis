@@ -21,6 +21,10 @@
     min-width: 250px;
     text-align: center;
 }
+.ol-popup--detailed{
+    min-width: 300px;
+    text-align: unset;
+}
 .ol-popup:after, .ol-popup:before {
     top: 100%;
     border: solid transparent;
