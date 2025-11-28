@@ -93,6 +93,10 @@ map.on('click', function(evt) {
         const popupText = `<strong>Feature</strong><br>${feature.get('FEATURE')}`;
         popupContent.innerHTML = popupText;
         popupOverlay.setPosition(evt.coordinate);
+        map.getView().animate({
+            center: evt.coordinate,
+            duration: 500
+        });
     } else { // Clicked outside any feature
         popupOverlay.setPosition(undefined);
     }
