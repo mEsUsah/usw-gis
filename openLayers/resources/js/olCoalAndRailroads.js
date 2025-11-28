@@ -77,6 +77,30 @@ coalLayerButton.element().addEventListener('click', function() {
 });
 buttonWrapper.addButton(coalLayerButton.element());
         
+// Popup overlay for displaying info windows
+var popupContainer = document.getElementById('popup');
+var popupContent = document.getElementById('popup-content');
+var popupOverlay = new ol.Overlay({
+    element: popupContainer
+});
+map.addOverlay(popupOverlay);
+map.on('click', function(evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+        return feature;
+    });
+
+    if (feature && feature.get('FEATURE')) {
+        const popupText = `<strong>Feature</strong><br>${feature.get('FEATURE')}`;
+        popupContent.innerHTML = popupText;
+        popupOverlay.setPosition(evt.coordinate);
+    } else { // Clicked outside any feature
+        popupOverlay.setPosition(undefined);
+    }
+});
+map.on('pointermove', function(e) {
+    var hit = map.hasFeatureAtPixel(e.pixel);
+    map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+});
 
 
 

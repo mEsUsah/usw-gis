@@ -42,8 +42,8 @@ var norwayGeoJSONLayer = new ol.layer.Vector({
     zIndex: 2,
     style: new ol.style.Style({
         stroke: new ol.style.Stroke({
-            color: '#a454ffff',
-            width: 2
+            color: '#ff9354ff',
+            width: 1
         }),
     })
 });
