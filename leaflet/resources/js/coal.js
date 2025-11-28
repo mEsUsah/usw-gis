@@ -1,4 +1,4 @@
-
+const toggleIndicatorClass = "bg-[#05ce00]";
 
 var map = L.map('map_space', {
     'zoomControl': false,
@@ -104,3 +104,38 @@ function addLegend(featureColors) {
         legendElement.appendChild(listItem);
     }
 }
+
+// Railroad
+const railroadLayer = L.layerGroup();
+fetch('/googleMapsApi/resources/geodata/railways_uk.geojson')
+    .then(response => response.json())
+    .then(data => {
+        L.geoJSON(data, {
+            style: function(feature) {
+                return {
+                    color: '#8B4513',
+                    weight: 2
+                };
+            }
+        }).addTo(railroadLayer);
+    });
+
+// Button to toggle Railroad visibility
+const railroadButton = document.getElementById("toggle_railroads");
+railroadButton.addEventListener("click", () => {
+    if (map.hasLayer(railroadLayer)) {
+        railroadButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
+        railroadButton.querySelector("[data-indicator]").classList.add("animate-ping");    
+        setTimeout(() => {
+            map.removeLayer(railroadLayer);
+            railroadButton.querySelector("[data-indicator]").classList.remove("animate-ping");
+        }, 500);
+    } else {
+        railroadButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
+        railroadButton.querySelector("[data-indicator]").classList.add("animate-ping");
+        setTimeout(() => {
+            map.addLayer(railroadLayer);
+            railroadButton.querySelector("[data-indicator]").classList.remove("animate-ping");
+        }, 500);
+    }
+});
