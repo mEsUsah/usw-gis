@@ -8,7 +8,7 @@ function drawMap() {
     const norwayCoordinates = {
         lat: 64.5,
         lng: 12.0
- };
+    };
     const norwayZoom = 4;
     
     const mapOptions = {
