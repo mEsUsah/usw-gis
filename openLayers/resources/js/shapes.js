@@ -4,13 +4,14 @@ const moldeCoordinates = {
     lat: 62.73547927593037, 
     lng: 7.156011858986631
 };
+const moldeZoomLevel = 9;
 
 // Initialize map
 map = new ol.Map({
     view: new ol.View({
         // https://openlayers.org/en/v4.6.5/apidoc/ol.proj.html#.fromLonLat
         center: ol.proj.fromLonLat([moldeCoordinates.lng, moldeCoordinates.lat], 'EPSG:3857'), // Molde, Norway, Google maps CRS
-        zoom: 9
+        zoom: moldeZoomLevel
     }),
     layers: [
         new ol.layer.Tile({
@@ -31,6 +32,37 @@ map = new ol.Map({
         })
     ])
 });
+
+// Norway border GeoJSON overlay (same as in Google Maps example)
+var norwayGeoJSONLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        format: new ol.format.GeoJSON(),
+        url: '/googleMapsApi/resources/geodata/norway.geojson'
+    }),
+    zIndex: 2,
+    style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: '#a454ffff',
+            width: 2
+        }),
+    })
+});
+
+const norwayLayerButton = new OlButton('Norway outline');
+norwayLayerButton.element().addEventListener('click', function() {
+    if (norwayLayerButton.isActive) {
+        map.removeLayer(norwayGeoJSONLayer);
+        norwayLayerButton.off();
+    } else {
+        map.addLayer(norwayGeoJSONLayer);
+        norwayLayerButton.on();
+        map.getView().setCenter(ol.proj.fromLonLat([16.0522, 65.9389], 'EPSG:3857')); // Center map to Norway
+        map.getView().setZoom(4);
+    }
+});
+buttonWrapper.addButton(norwayLayerButton.element());
+
+
 
 // Draw a heart-shaped polygon around Molde
 // NB: OpenLayers uses [longitude, latitude] coordinate order (Opposite of Google Maps)
@@ -126,12 +158,24 @@ vectorSource.addFeature(circleFeature);
 
 // Create a vector layer to display the vectors
 var vectorLayer = new ol.layer.Vector({
-    zIndex: 2,
+    zIndex: 3,
     source: vectorSource
 });
 
-// Add the layer to the map
-map.addLayer(vectorLayer);
+// GeoJSON overlay toggle button
+const moldeLayerButton = new OlButton('Molde');
+moldeLayerButton.element().addEventListener('click', function() {
+    if (moldeLayerButton.isActive) {
+        map.removeLayer(vectorLayer);
+        moldeLayerButton.off();
+    } else {
+        map.addLayer(vectorLayer);
+        moldeLayerButton.on();
+        map.getView().setCenter(ol.proj.fromLonLat([moldeCoordinates.lng, moldeCoordinates.lat], 'EPSG:3857')); // Center map to Molde
+        map.getView().setZoom(moldeZoomLevel);
+    }
+});
+buttonWrapper.addButton(moldeLayerButton.element());
 
 
 // Popup overlay for displaying info windows

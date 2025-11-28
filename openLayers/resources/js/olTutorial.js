@@ -119,36 +119,6 @@ bngLayerButton.element().addEventListener('click', function() {
 buttonWrapper.addButton(bngLayerButton.element());
 
 
-// Norway border GeoJSON overlay (same as in Google Maps example)
-var norwayGeoJSONLayer = new ol.layer.Vector({
-    source: new ol.source.Vector({
-        format: new ol.format.GeoJSON(),
-        url: '/googleMapsApi/resources/geodata/norway.geojson'
-    }),
-    zIndex: 5,
-    style: new ol.style.Style({
-        stroke: new ol.style.Stroke({
-            color: '#a454ffff',
-            width: 2
-        }),
-    })
-});
-
-const norwayLayerButton = new OlButton('Norway outline');
-norwayLayerButton.element().addEventListener('click', function() {
-    if (norwayLayerButton.isActive) {
-        map.removeLayer(norwayGeoJSONLayer);
-        norwayLayerButton.off();
-    } else {
-        map.addLayer(norwayGeoJSONLayer);
-        norwayLayerButton.on();
-        map.getView().setCenter(ol.proj.fromLonLat([16.0522, 65.9389], 'EPSG:3857')); // Center map to Norway
-        map.getView().setZoom(4);
-    }
-});
-buttonWrapper.addButton(norwayLayerButton.element());
-
-
 // Heatmap overlay - Earthquakes
 var eatthquakeHeatmapLayer = new ol.layer.Heatmap({
     title: 'Earthquakes heatmap',
@@ -164,7 +134,7 @@ var eatthquakeHeatmapLayer = new ol.layer.Heatmap({
     name: "heatmapLayer"
 });
 
-const heatmapLayerButton = new OlButton('Earthquakes');
+const heatmapLayerButton = new OlButton('Earthquakes heatmap');
 heatmapLayerButton.element().addEventListener('click', function() {
     if (heatmapLayerButton.isActive) {
         map.removeLayer(eatthquakeHeatmapLayer);
@@ -179,7 +149,7 @@ heatmapLayerButton.element().addEventListener('click', function() {
 buttonWrapper.addButton(heatmapLayerButton.element());
 
 
-const moveToMoscowButton = new OlButton('Moscow', false);
+const moveToMoscowButton = new OlButton('Pan to Moscow', false);
 moveToMoscowButton.element().addEventListener('click', function() {
     map.getView().animate({
         center: ol.proj.fromLonLat([37.6173, 55.7558], 'EPSG:3857'), // Moscow
