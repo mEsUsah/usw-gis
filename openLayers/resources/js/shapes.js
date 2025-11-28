@@ -53,7 +53,8 @@ var polygonHeart = new ol.geom.Polygon([polygonHeartCoordinates]).transform('EPS
 // Create a feature using the geometry
 var polygonHeartFeature = new ol.Feature({
     geometry: polygonHeart,
-    name: 'Heart'
+    name: 'Molde',
+    description: 'Molde is the town I grew up in, and currently work.'
 });
 
 // Add some styling to the heart polygon
@@ -83,7 +84,7 @@ var lineStringHeart = new ol.geom.LineString(arrowCoordinates).transform('EPSG:4
 // Create a feature using the geometry
 var lineFeature = new ol.Feature({
     geometry: lineStringHeart,
-    name: 'Arrow'
+    name: 'Arrow',
 });
 
 // Style for the line
@@ -100,7 +101,8 @@ const circleCenter = ol.proj.fromLonLat([7.6641673690567425, 62.90265148318389],
 
 var circleFeature = new ol.Feature({
     geometry: new ol.geom.Circle(circleCenter, 2000), // radius in meters
-    name: 'Home'
+    name: 'Home',
+    description: 'This is where I live, in Norway.'
 });
 
 // Style for the circle
@@ -130,3 +132,25 @@ var vectorLayer = new ol.layer.Vector({
 
 // Add the layer to the map
 map.addLayer(vectorLayer);
+
+
+// Popup overlay for displaying info windows
+var popupContainer = document.getElementById('popup');
+var popupContent = document.getElementById('popup-content');
+var popupOverlay = new ol.Overlay({
+    element: popupContainer
+});
+map.addOverlay(popupOverlay);
+map.on('click', function(evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+        return feature;
+    });
+
+    if (feature && feature.get('description') && feature.get('name')) {
+        const popupText = `<strong>${feature.get('name')}</strong><br>${feature.get('description')}`;
+        popupContent.innerHTML = popupText;
+        popupOverlay.setPosition(evt.coordinate);
+    } else { // Clicked outside any feature
+        popupOverlay.setPosition(undefined);
+    }
+});
