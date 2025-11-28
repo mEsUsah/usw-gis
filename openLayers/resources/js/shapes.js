@@ -33,6 +33,7 @@ map = new ol.Map({
 });
 
 // Draw a heart-shaped polygon around Molde
+// NB: OpenLayers uses [longitude, latitude] coordinate order (Opposite of Google Maps)
 const polygonHeartCoordinates = [
    [ 7.2, 62.65],
    [7.375, 62.75],
@@ -63,10 +64,38 @@ polygonHeartFeature.setStyle(new ol.style.Style({
     })
 }));
 
+
+// Add an arrow pointing to where I work
+const arrowCoordinates= [
+    [7.51, 62.90],
+    [7.194, 62.7492],
+    [7.194, 62.77],
+    [7.194, 62.7492],
+    [7.235, 62.7492],
+];
+
+// Create a LineString geometry and transform coordinates
+var lineStringHeart = new ol.geom.LineString(arrowCoordinates).transform('EPSG:4326', 'EPSG:3857');
+
+// Create a feature using the geometry
+var lineFeature = new ol.Feature({
+    geometry: lineStringHeart,
+    name: 'Arrow'
+});
+
+// Style for the line
+lineFeature.setStyle(new ol.style.Style({
+    stroke: new ol.style.Stroke({
+        color: '#000000', // black
+        width: 3
+    })
+}));
+
 // Create a vector source and layer. 
 // This is needed to display the feature on the map
 var vectorSource = new ol.source.Vector();
 vectorSource.addFeature(polygonHeartFeature); 
+vectorSource.addFeature(lineFeature);
 
 // Create a vector layer to display the vectors
 var vectorLayer = new ol.layer.Vector({
@@ -76,6 +105,3 @@ var vectorLayer = new ol.layer.Vector({
 
 // Add the layer to the map
 map.addLayer(vectorLayer);
-
-// Optional: Fit the view to see the entire polyline
-// map.getView().fit(lineString.getExtent(), { padding: [50, 50, 50, 50] });
