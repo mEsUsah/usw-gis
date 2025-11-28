@@ -59,8 +59,11 @@ var polygonHeartFeature = new ol.Feature({
 // Add some styling to the heart polygon
 polygonHeartFeature.setStyle(new ol.style.Style({
     stroke: new ol.style.Stroke({
-    color: '#ff0000',   // red
-    width: 4
+        color: '#ff0000',   // red
+        width: 2
+    }),
+    fill: new ol.style.Fill({
+        color: 'rgba(255, 0, 0, 0.25)' // semi-transparent red
     })
 }));
 
@@ -91,11 +94,33 @@ lineFeature.setStyle(new ol.style.Style({
     })
 }));
 
+
+// Add a circle at the point where I live
+const circleCenter = ol.proj.fromLonLat([7.6641673690567425, 62.90265148318389], 'EPSG:3857'); // Convert to map projection
+
+var circleFeature = new ol.Feature({
+    geometry: new ol.geom.Circle(circleCenter, 2000), // radius in meters
+    name: 'Home'
+});
+
+// Style for the circle
+circleFeature.setStyle(new ol.style.Style({
+    stroke: new ol.style.Stroke({
+        color: '#ae00ff', // purple
+        width: 4
+    }),
+    fill: new ol.style.Fill({
+        color: 'rgba(174, 0, 255, 0.5)' // semi-transparent purple
+    })
+}));
+
+
 // Create a vector source and layer. 
 // This is needed to display the feature on the map
 var vectorSource = new ol.source.Vector();
 vectorSource.addFeature(polygonHeartFeature); 
 vectorSource.addFeature(lineFeature);
+vectorSource.addFeature(circleFeature);
 
 // Create a vector layer to display the vectors
 var vectorLayer = new ol.layer.Vector({
