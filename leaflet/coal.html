@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coal resources</title>
+    <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+</head>
+<body class="w-full max-w-4xl mx-auto flex flex-col h-screen">
+    <header class="flex flex-row gap-4 lg:gap-8 items-center">
+        <img src="/resources/icons/favicon.svg" alt="Logo for USW coursework by Stanley Skarshaug" class="h-24 lg:h-32">
+        <div class="pr-2">
+            <p class="text-xl lg:text-4xl font-medium">GIS and the Spatial Web</p>
+            <p class="text-md lg:text-xl">Leaflet</p>
+        </div>
+    </header>
+    <nav class="m-4 lg:my-4 lg:mx-8">
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/leaflet/" class="text-[#DE0832] hover:underline">Leaflet</a> / Coal resources
+    </nav>
+    <main class="m-4 lg:m-8 flex-grow">
+        <section>
+            <h1 class="text-lg lg:text-2xl font-medium">Coal resources</h1>
+            <p>Implementing data sources into leaflet</p>
+        </section>
+        <section class="relative border border-gray-300">
+            <div id="map_space" class="w-full h-120"></div>
+            <div class="pl-2 hidden" data-coal-legend-container>
+                <h3 class="font-medium">Legend</h3>
+                <ul data-coal-legend></ul>
+            </div>
+            <div class="flex flex-col lg:flex-row absolute top-[10px] left-[10px] z-[1000]">
+                <button id="toggle_coal" class="flex flex-row items-center gap-2 bg-white hover:bg-[#f4f4f4] text-gray-700 hover:text-black cursor-pointer py-1 px-2 border border-[#ccc] border-r-0">
+                    <span data-indicator="" class="h-[8px] w-[8px] border border-black rounded "></span>
+                    <span class="text-black font-medium">UK Coal Resources </span>
+                </button>
+                <button id="toggle_molde" class="flex flex-row items-center gap-2 bg-white hover:bg-[#f4f4f4] text-gray-700 hover:text-black cursor-pointer py-1 px-2 border border-[#ccc]">
+                    <span data-indicator class="h-[8px] w-[8px] border border-black rounded"></span>
+                    <span class="text-black font-medium">Molde</span>
+                </button>
+            </div>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium">Drawing on the map</h2>
+            <p>On the map above I have demonstrated the use of a polygon, line and circle to draw shapes on the map. Click the button labeled "Molde" to toggle the visibility of these shapes.
+                The toggle switch will change color to indicate the current state, and when it is turned on, the map will zoom to fit the shapes, and center the map on the Molde area.</p>
+            <p>By clicking on the polygon and circle shape a info window will breafly appear showing information about the locations.</p>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium">GeoJSON Data</h2>
+            <p>The map also demonstrates the use of GeoJSON data to represent geographical features. By clicking on the button labeled "Norway outline", you will toggle the visibility of a GeoJSON shape outlining Norway.
+                This data is loaded from a GeoJSON file and displayed on the map.</p>
+            <p>The GeoJSON file was created by loading a KML file into QGIS and exporting it as GeoJSON.</p>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium">Notes</h2>
+            <p>The student included this to demonstrate the use of similar functionality that was made using the Google Maps API.</p>
+        </section>
+    </main>
+    <footer class="bg-[#DE0832] text-white py-8">
+        <p class="text-center">USW coursework by Stanley Skarshaug</p>
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+    <script src="resources/js/coal.js"></script>
+</body>
+</html>
