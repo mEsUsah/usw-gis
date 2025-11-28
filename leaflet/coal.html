@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coal resources</title>
+    <title>GeoJSON</title>
     <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -19,11 +19,11 @@
         </div>
     </header>
     <nav class="m-4 lg:my-4 lg:mx-8">
-        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/leaflet/" class="text-[#DE0832] hover:underline">Leaflet</a> / Coal resources
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/leaflet/" class="text-[#DE0832] hover:underline">Leaflet</a> / GeoJSON
     </nav>
     <main class="m-4 lg:m-8 flex-grow">
         <section>
-            <h1 class="text-lg lg:text-2xl font-medium">Coal resources</h1>
+            <h1 class="text-lg lg:text-2xl font-medium">GeoJSON</h1>
             <p>Implementing data sources into leaflet</p>
         </section>
         <section class="relative border border-gray-300">
@@ -41,19 +41,23 @@
                     <span data-indicator class="h-[8px] w-[8px] border border-black rounded"></span>
                     <span class="text-black font-medium">UK Railroads</span>
                 </button>
+                <button id="toggle_earthquakes" class="flex flex-row items-center gap-2 bg-white hover:bg-[#f4f4f4] text-gray-700 hover:text-black cursor-pointer py-1 px-2 border border-[#ccc]">
+                    <span data-indicator class="h-[8px] w-[8px] border border-black rounded"></span>
+                    <span class="text-black font-medium">Earthquakes</span>
+                </button>
             </div>
         </section>
         <section>
-            <h2 class="mt-4 font-medium">Drawing on the map</h2>
-            <p>On the map above I have demonstrated the use of a polygon, line and circle to draw shapes on the map. Click the button labeled "Molde" to toggle the visibility of these shapes.
-                The toggle switch will change color to indicate the current state, and when it is turned on, the map will zoom to fit the shapes, and center the map on the Molde area.</p>
-            <p>By clicking on the polygon and circle shape a info window will breafly appear showing information about the locations.</p>
-        </section>
-        <section>
-            <h2 class="mt-4 font-medium">GeoJSON Data</h2>
-            <p>The map also demonstrates the use of GeoJSON data to represent geographical features. By clicking on the button labeled "Norway outline", you will toggle the visibility of a GeoJSON shape outlining Norway.
-                This data is loaded from a GeoJSON file and displayed on the map.</p>
-            <p>The GeoJSON file was created by loading a KML file into QGIS and exporting it as GeoJSON.</p>
+            <h2 class="mt-4 font-medium ">GeoJSON</h2>
+            <p>The map demostrates the use of three GeoJSON datasets. One contains a set of polygons classified by feature types. 
+                These feature types are dynamically assigned a unique color that is helpful to quickly visually identify what resource is where on the map. The same data was used also to dynamically build a legend for the map. 
+                The coal resources dataset was acquired from the British Geological Survey (<a href="https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/" class="text-[#DE0832] hover:underline">link</a>) 
+                as a shapefile that was cleaned and converted to GeoJSON using QGIS.</p>
+            <p class="mt-2">The second dataset contains railroads in the UK. This dataset was aquired from the Humanitarian OpenStreetMap Team  (<a href="https://data.humdata.org/dataset/hotosm_gbr_railways" class="text-[#DE0832] hover:underline">link</a>).
+                This dataset was also cleaned from unwanted informaton. To reduce the filesize the dataset was simplified to a tolerance of 100m before it was exported to GeoJSON. 
+                Since it takes a noticable amount of time to toggle the large dataset on the map, a simple loading animation was added to make the users understand that something is happening while they wait.</p>
+            <p class="mt-2">The third dataset contains a set of registered earthquakes. These datapoints are added to the map using custom markers. When clicking on the markers, an info window appears on the map showing more details about the earthquake.
+                This dataset was provided by USW on blackboard as a KML file. This file was first converted to a shapefile, then some of the data was removed before it finally was converted to GeoJSON.</p>
         </section>
         <section>
             <h2 class="mt-4 font-medium">Notes</h2>

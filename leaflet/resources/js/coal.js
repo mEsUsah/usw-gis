@@ -37,8 +37,9 @@ fetch('/googleMapsApi/resources/geodata/coal_uk.geojson')
                 };
             },
             onEachFeature: function (feature, layer) {
-                layer.on('click', function () {
-                    alert('Feature: ' + feature.properties['FEATURE']);
+                layer.bindPopup(`${feature.properties['FEATURE']}`, {
+                    closeButton: false,
+                    
                 });
             }
         }).addTo(coalLayer);   
@@ -137,5 +138,50 @@ railroadButton.addEventListener("click", () => {
             map.addLayer(railroadLayer);
             railroadButton.querySelector("[data-indicator]").classList.remove("animate-ping");
         }, 500);
+    }
+});
+
+
+// Earthquakes
+const earthquakeLayer = L.layerGroup();
+
+fetch('/googleMapsApi/resources/geodata/2012_earthquakes_mag5.geojson')
+    .then(response => response.json())
+    .then(data => {
+        const geoJsonLayerEarthquakes = L.geoJSON(data, {
+            onEachFeature: function (feature, layer) {
+                const time = feature.properties.id;
+                const data = feature.properties.Name;
+                const magnitude = data.split(' - ')[0];
+                const place = data.split(', ')[1];
+                layer.bindPopup(`<b class="text-[#DE0832] text-lg">Earthquake</b><br>
+                    <b>Magnitude:</b> ${magnitude}<br>
+                    <b>Location:</b> ${place}<br>
+                    <b>Time:</b> ${time}`);
+            },
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: '/resources/icons/mapMarker.svg',
+                        iconSize: [33, 50],
+                        iconAnchor: [16.5, 45],
+                        popupAnchor: [0, -40],
+                    }),
+                });
+            }
+        });
+        earthquakeLayer.addLayer(geoJsonLayerEarthquakes);
+    });
+
+
+// Button to toggle Earthquake visibility
+const earthquakeButton = document.getElementById("toggle_earthquakes");
+earthquakeButton.addEventListener("click", () => {
+    if (map.hasLayer(earthquakeLayer)) {
+        map.removeLayer(earthquakeLayer);
+        earthquakeButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
+    } else {
+        map.addLayer(earthquakeLayer);
+        earthquakeButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
     }
 });
