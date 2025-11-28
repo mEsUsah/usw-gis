@@ -8,7 +8,7 @@ const norwayCoordinates = {
     lat: 64.5,
     lng: 12.0
 };
-
+const norwayZoom = 4;
 const toggleIndicatorClass = "bg-[#05ce00]";
 
 
@@ -90,5 +90,37 @@ moldeButton.addEventListener('click', () => {
         map.addLayer(moldeLayer);
         moldeButton.querySelector('[data-indicator]').classList.add(toggleIndicatorClass);
         map.setView(moldeCoordinates, moldeZoom);
+    }
+});
+
+
+
+
+// Norway Outline
+const norwayLayer = L.layerGroup();
+
+fetch('/googleMapsApi/resources/geodata/norway.geojson')
+    .then(response => response.json())
+    .then(data => {
+        const norwayOutline = L.geoJSON(data, {
+            style: {
+                color: '#ff9354ff',
+                weight: 2,
+                opacity: 1,
+                fillColor: 'null',
+                fillOpacity: 0
+            }
+        }).addTo(norwayLayer);
+    });
+
+const norwayButton = document.getElementById('toggle_norway');
+norwayButton.addEventListener('click', () => {
+    if (map.hasLayer(norwayLayer)) {
+        map.removeLayer(norwayLayer);
+        norwayButton.querySelector('[data-indicator]').classList.remove(toggleIndicatorClass);
+    } else {
+        map.addLayer(norwayLayer);
+        norwayButton.querySelector('[data-indicator]').classList.add(toggleIndicatorClass);
+        map.setView(norwayCoordinates, norwayZoom);
     }
 });
