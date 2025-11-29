@@ -37,11 +37,11 @@ map = new ol.Map({
 // Custom marker
 var iconStyle = new ol.style.Style({
     image: new ol.style.Icon({
-    anchor: [0.5, 1],           // bottom center of the image
-    anchorXUnits: 'fraction',
-    anchorYUnits: 'fraction',
-    src: '/resources/icons/mapMarker.svg', // default OL icon
-    scale: 1.0
+        anchor: [0.5, 1],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'fraction',
+        src: '/resources/icons/mapMarker.svg',
+        scale: 1.0
     })
 });
 
