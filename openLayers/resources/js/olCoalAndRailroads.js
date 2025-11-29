@@ -77,73 +77,6 @@ coalLayerButton.element().addEventListener('click', function() {
 });
 buttonWrapper.addButton(coalLayerButton.element());
         
-// Popup overlay for displaying info windows
-var popupContainer = document.getElementById('popup');
-var popupContent = document.getElementById('popup-content');
-var popupOverlay = new ol.Overlay({
-    element: popupContainer
-});
-map.addOverlay(popupOverlay);
-map.on('click', function(evt) {
-    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
-        return feature;
-    });
-
-    if (feature && feature.get('FEATURE')) {
-        const popupText = `<strong>Feature</strong><br>${feature.get('FEATURE')}`;
-        popupContent.innerHTML = popupText;
-        popupOverlay.setPosition(evt.coordinate);
-        map.getView().animate({
-            center: evt.coordinate,
-            duration: 500
-        });
-    } else { // Clicked outside any feature
-        popupOverlay.setPosition(undefined);
-    }
-});
-map.on('pointermove', function(e) {
-    var hit = map.hasFeatureAtPixel(e.pixel);
-    map.getTargetElement().style.cursor = hit ? 'pointer' : '';
-});
-
-
-
-
-function getFeatureColors(features) {
-    let output = {};
-    Array.prototype.forEach.call(features, (feature, index) => {
-        const hue = index * (360 / features.length);
-        output[feature] = {
-            name: feature,
-            color: `hsl(${hue}, 100%, 50%)`,
-            outline: `hsl(${hue}, 100%, 30%)`
-        };
-    });
-    return output;
-}
-
-function addLegend(featureColors) {
-    const legendElement = document.querySelector('[data-coal-legend]');
-
-    for (const featureName in featureColors) {
-        const colorInfo = featureColors[featureName];
-
-        const listItem = document.createElement('li');
-        listItem.classList.add('flex', 'items-center', 'gap-2', 'mb-1');
-        const colorBox = document.createElement('span');
-        colorBox.classList.add('w-2', 'h-2', 'inline-block', 'border');
-        colorBox.style.borderColor = colorInfo.outline;
-        colorBox.style.backgroundColor = colorInfo.color;
-
-        const label = document.createElement('span');
-        label.textContent = featureName;
-
-        listItem.appendChild(colorBox);
-        listItem.appendChild(label);
-        legendElement.appendChild(listItem);
-    }
-}
-
 // UK Railroads GeoJSON overlay
 const railroadsLayer = new ol.layer.Vector({
     zIndex: 2,
@@ -207,6 +140,7 @@ fetch(earthquakesUrl)
             url: earthquakesUrl
         }));
 
+        // Set the style for earthquake markers
         earthquakesLayer.setStyle((feature) => {
             return iconStyle;
         });
@@ -223,3 +157,90 @@ earthquakesLayerButton.element().addEventListener('click', function() {
     }
 });
 buttonWrapper.addButton(earthquakesLayerButton.element());
+
+
+
+
+function getFeatureColors(features) {
+    let output = {};
+    Array.prototype.forEach.call(features, (feature, index) => {
+        const hue = index * (360 / features.length);
+        output[feature] = {
+            name: feature,
+            color: `hsl(${hue}, 100%, 50%)`,
+            outline: `hsl(${hue}, 100%, 30%)`
+        };
+    });
+    return output;
+}
+
+function addLegend(featureColors) {
+    const legendElement = document.querySelector('[data-coal-legend]');
+
+    for (const featureName in featureColors) {
+        const colorInfo = featureColors[featureName];
+
+        const listItem = document.createElement('li');
+        listItem.classList.add('flex', 'items-center', 'gap-2', 'mb-1');
+        const colorBox = document.createElement('span');
+        colorBox.classList.add('w-2', 'h-2', 'inline-block', 'border');
+        colorBox.style.borderColor = colorInfo.outline;
+        colorBox.style.backgroundColor = colorInfo.color;
+
+        const label = document.createElement('span');
+        label.textContent = featureName;
+
+        listItem.appendChild(colorBox);
+        listItem.appendChild(label);
+        legendElement.appendChild(listItem);
+    }
+}
+
+// Popup overlay for displaying info windows
+var popupContainer = document.getElementById('popup');
+var popupContent = document.getElementById('popup-content');
+var popupOverlay = new ol.Overlay({
+    element: popupContainer
+});
+map.addOverlay(popupOverlay);
+map.on('click', function(evt) {
+    var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+        return feature;
+    });
+
+    // Coal resources
+    if (feature && feature.get('FEATURE')) {
+        const popupText = `${feature.get('FEATURE')}`;
+        popupContent.innerHTML = popupText;
+        popupOverlay.setPosition(evt.coordinate);
+        map.getView().animate({
+            center: evt.coordinate,
+            duration: 500
+        });
+
+    // Earthquakes
+    } else if (feature && feature.get('Name') && feature.get('id')) {
+        const time = feature.get('id');
+        const data = feature.get('Name');
+        const magnitude = data.split(' - ')[0];
+        const place = data.split(', ')[1];
+        popupContent.innerHTML = `<b class="text-[#DE0832] text-lg">Earthquake</b><br>
+                            <b>Magnitude:</b> ${magnitude}<br>
+                            <b>Location:</b> ${place}<br>
+                            <b>Time:</b> ${time}`;;
+        popupOverlay.setPosition(evt.coordinate);
+        map.getView().animate({
+            center: evt.coordinate,
+            duration: 500
+        });
+    
+    // Clicked outside any feature
+    } else {
+        popupOverlay.setPosition(undefined);
+    }
+});
+map.on('pointermove', function(e) {
+    var hit = map.hasFeatureAtPixel(e.pixel);
+    map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+});
+

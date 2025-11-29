@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coal resources</title>
+    <title>GeoJSON</title>
     <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
     <link href="resources/css/ol.css" rel="stylesheet">
     <link href="resources/css/olCustom.css" rel="stylesheet">
@@ -18,14 +18,14 @@
         </div>
     </header>
     <nav class="m-4 lg:my-4 lg:mx-8">
-        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/openLayers/" class="text-[#DE0832] hover:underline">OpenLayers</a> / Coal resources
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/openLayers/" class="text-[#DE0832] hover:underline">OpenLayers</a> / GeoJSON
     </nav>
     <main class="m-4 lg:m-8 flex-grow">
-        <h1 class="text-lg lg:text-2xl font-medium">Coal resources</h1>
+        <h1 class="text-lg lg:text-2xl font-medium">GeoJSON</h1>
         <p>Consuming GeoJSON with OpenLayers</p>
         <section class="relative border border-gray-300">
             <div id="map_space" class="w-full h-120"></div>
-            <div id="popup" class="ol-popup">
+            <div id="popup" class="ol-popup  ol-popup--detailed">
                 <div id="popup-content"></div>
             </div>
             <div class="pl-2 hidden" data-coal-legend-container>
@@ -35,10 +35,15 @@
         </section>
         <section>
             <h2 class="mt-4 font-medium ">GeoJSON</h2>
-            <p>The map demostrates the use of a GeoJSON dataset that contains a set of polygons classified by feature types. 
+            <p>The map demostrates the use of three GeoJSON datasets. One contains a set of polygons classified by feature types. 
                 These feature types are dynamically assigned a unique color that is helpful to quickly visually identify what resource is where on the map. The same data was used also to dynamically build a legend for the map. 
                 The coal resources dataset was acquired from the British Geological Survey (<a href="https://www.bgs.ac.uk/datasets/coal-resources-for-new-technologies/" class="text-[#DE0832] hover:underline">link</a>) 
                 as a shapefile that was cleaned and converted to GeoJSON using QGIS.</p>
+            <p class="mt-2">The second dataset contains railroads in the UK. This dataset was aquired from the Humanitarian OpenStreetMap Team  (<a href="https://data.humdata.org/dataset/hotosm_gbr_railways" class="text-[#DE0832] hover:underline">link</a>).
+                This dataset was also cleaned from unwanted informaton. To reduce the filesize the dataset was simplified to a tolerance of 100m before it was exported to GeoJSON. 
+                Since it takes a noticable amount of time to toggle the large dataset on the map, a simple loading animation was added to make the users understand that something is happening while they wait.</p>
+            <p class="mt-2">The third dataset contains a set of registered earthquakes. These datapoints are added to the map using custom markers. When clicking on the markers, an info window appears on the map showing more details about the earthquake.
+                This dataset was provided by USW on blackboard as a KML file. This file was first converted to a shapefile, then some of the data was removed before it finally was converted to GeoJSON.</p>
         </section>
         <section>
             <h2 class="mt-4 font-medium">Notes</h2>
