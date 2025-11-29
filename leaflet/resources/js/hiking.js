@@ -121,6 +121,7 @@ const geoJSONroute = fetch('/leaflet/resources/geodata/franavarden.geojson') // 
             attribution: '<a href="https://morotur.no/">Morotur.no</a>'
         });
         layerControl.addOverlay(routeLayer, 'Hiking Route: Frænavarden');
+        routeLayer.addTo(map); // Preselect the route layer
     });
 
 
@@ -141,6 +142,7 @@ const pois = fetch('/leaflet/resources/geodata/poi.json')
             });
             marker.bindPopup(`<b>${poi.name}</b><br>${poi.desc}`);
             poiLayer.addLayer(marker);
+            poiLayer.addTo(map); // Preselect the POI layer
         });
     });
         
