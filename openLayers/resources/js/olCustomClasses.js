@@ -48,10 +48,11 @@ class OlButton {
 class OlButtonWrapper {
     constructor() {
         this.wrapperElement = document.createElement('div');
-        this.wrapperElement.classList.add('ol-unselectable', 'ol-control', 'flex', 'flex-row');
+        this.wrapperElement.classList.add('ol-unselectable', 'ol-control', 'flex', 'flex-row', 'flex-wrap', 'size-fit');
         this.wrapperElement.style.top = '0.5em';
         this.wrapperElement.style.left = '0.5em';
         this.wrapperElement.style.position = 'absolute';
+        this.wrapperElement.style.maxWidth = 'calc(100% - 1em)';
     }
 
     element() {
