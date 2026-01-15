@@ -1,0 +1,21 @@
+.leaflet-control-wms-legend
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    cursor: pointer;
+    background-color: #FFFFFF;
+    border: 2px solid rgba(0,0,0,0.2);
+    padding: 3px;
+
+}
+
+.leaflet-control-wms-legend:hover
+{
+    filter: brightness(95%);
+}
