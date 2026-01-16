@@ -1,6 +1,7 @@
-import L from "leaflet";
+import L, { point } from "leaflet";
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-wfst';
+
 const toggleIndicatorClass = "bg-[#05ce00]";
 var map = L.map('map_space', {
     'zoomControl': false,
@@ -24,8 +25,8 @@ mapLayer.addTo(map);
 // WFS layer from GeoServer
 var filter = new L.Filter.EQ('type', '0'); // Hiking points
 
-var pointLayer = new L.WFS({
-    url: 'https://geoserver.haxor.no/geoserver/ows',
+var pointLayer = new L.WFST({
+    url: 'https://geoserver.haxor.no/geoserver/wfs',
     typeNS: 'usw',
     typeName: 'morotur_route_points',
     crs: L.CRS.EPSG4326,
@@ -36,8 +37,8 @@ var pointLayer = new L.WFS({
 
 
 }, new L.Format.GeoJSON({
-    pointToLayer: (feature, latlng) => {
-        const grade = feature.properties.grade;
+    pointToLayer: (geoJsonPoint, latlng) => {
+        const grade = geoJsonPoint.properties.grade;
         const icon = L.icon({ 
             iconUrl: "/resources/icons/hikingMarker" + (parseInt(grade) + 1) + ".svg", 
             iconSize: [32, 37],
@@ -45,9 +46,22 @@ var pointLayer = new L.WFS({
             popupAnchor: [0, -37],
         });
         return L.marker(latlng, { icon });
-    },
+    }
 }));
 pointLayer.addTo(map);
+
+// add popup on each feature
+pointLayer.on('click', function(event) {
+    console.log(event.sourceTarget.feature.properties);
+    const props = event.sourceTarget.feature.properties;
+    const popupContent = `
+        <b>Name:</b> ${props.name}<br/>
+        <b>Type:</b> ${props.type === '0' ? 'Hiking' : props.type === '1' ? 'Skiing' : props.type === '2' ? 'Biking' : 'Kayaking'}<br/>
+        <b>Grade:</b> ${props.grade === '-1' ? 'Very Easy' : props.grade === '0' ? 'Easy' : props.grade === '1' ? 'Medium' : props.grade === '2' ? 'Hard' : 'Very Hard'}<br/>
+        <a href="${props.url}" target="_blank">Read more</a>
+    `;
+    event.layer.bindPopup(popupContent, { closeButton: false }).openPopup();
+});
 
 
 // Buttons to toggle route types
