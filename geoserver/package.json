@@ -1,0 +1,18 @@
+{
+  "name": "usw-cw3-geoserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "laravel-mix watch",
+    "build": "laravel-mix --production"
+  },
+  "author": "Stanley Skarshaug",
+  "license": "ISC",
+  "devDependencies": {
+    "laravel-mix": "^6.0.49",
+    "leaflet": "^1.9.4",
+    "leaflet-wfst": "^2.0.1-beta.27"
+  }
+}

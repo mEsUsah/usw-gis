@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes - WFS</title>
+    <link rel="icon" type="image/svg+xml" href="/resources/icons/favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="w-full max-w-4xl mx-auto flex flex-col h-screen">
+    <header class="flex flex-row gap-4 lg:gap-8 items-center">
+        <img src="/resources/icons/favicon.svg" alt="Logo for USW coursework by Stanley Skarshaug" class="h-24 lg:h-32">
+        <div class="pr-2">
+            <p class="text-xl lg:text-4xl font-medium">GIS and the Spatial Web</p>
+            <p class="text-md lg:text-xl">GeoServer</p>
+        </div>
+    </header>
+    <nav class="m-4 lg:my-4 lg:mx-8">
+        <a href="/" class="text-[#DE0832] hover:underline">Home</a> / <a href="/geoserver/" class="text-[#DE0832] hover:underline">GeoServer</a> / Routes - WFS
+    </nav>
+    <main class="m-4 lg:m-8 flex-grow">
+        <section>
+            <h1 class="text-lg lg:text-2xl font-medium">Routes - WFS</h1>
+            <p>Implementing GeoServer WFS</p>
+        </section>
+        <section class="relative border border-gray-300">
+            <div id="map_space" class="w-full h-120"></div>
+            <div class="flex flex-col lg:flex-row absolute top-[10px] left-[10px] z-[1000]">
+                <button id="toggle_hiking" class="flex flex-row items-center gap-2 bg-white hover:bg-[#f4f4f4] text-gray-700 hover:text-black cursor-pointer py-1 px-2 border border-[#ccc] lg:border-r-0">
+                    <span data-indicator="" class="h-[8px] w-[8px] border border-black rounded bg-[#05ce00]"></span>
+                    <span class="text-black font-medium">Hiking</span>
+                </button>
+                <button id="toggle_skiing" class="flex flex-row items-center gap-2 bg-white hover:bg-[#f4f4f4] text-gray-700 hover:text-black cursor-pointer py-1 px-2 border border-[#ccc] lg:border-r-0">
+                    <span data-indicator="" class="h-[8px] w-[8px] border border-black rounded"></span>
+                    <span class="text-black font-medium">Skiing</span>
+                </button>
+                <button id="toggle_biking" class="flex flex-row items-center gap-2 bg-white hover:bg-[#f4f4f4] text-gray-700 hover:text-black cursor-pointer py-1 px-2 border border-[#ccc] lg:border-r-0">
+                    <span data-indicator="" class="h-[8px] w-[8px] border border-black rounded"></span>
+                    <span class="text-black font-medium">Biking</span>
+                </button>
+                <button id="toggle_kayaking" class="flex flex-row items-center gap-2 bg-white hover:bg-[#f4f4f4] text-gray-700 hover:text-black cursor-pointer py-1 px-2 border border-[#ccc] lg:border-r-1">
+                    <span data-indicator="" class="h-[8px] w-[8px] border border-black rounded"></span>
+                    <span class="text-black font-medium">Kayaking</span>
+                </button>
+            </div>
+        </section>
+        <section>
+            <h2 class="mt-4 font-medium ">GeoServer WMS</h2>
+            <p>The map demostrates</p>
+            <p class="mt-2">The...</p>
+        </section>
+    </main>
+    <footer class="bg-[#DE0832] text-white py-8">
+        <p class="text-center">USW coursework by Stanley Skarshaug</p>
+    </footer>
+    <script src="resources/js/wfs.js"></script>
+</body>
+</html>
