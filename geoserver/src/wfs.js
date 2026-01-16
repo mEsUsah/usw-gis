@@ -55,9 +55,9 @@ pointLayer.on('click', function(event) {
     console.log(event.sourceTarget.feature.properties);
     const props = event.sourceTarget.feature.properties;
     const popupContent = `
-        <b>Name:</b> ${props.name}<br/>
-        <b>Type:</b> ${props.type === '0' ? 'Hiking' : props.type === '1' ? 'Skiing' : props.type === '2' ? 'Biking' : 'Kayaking'}<br/>
-        <b>Grade:</b> ${props.grade === '-1' ? 'Very Easy' : props.grade === '0' ? 'Easy' : props.grade === '1' ? 'Medium' : props.grade === '2' ? 'Hard' : 'Very Hard'}<br/>
+        <b>Name:</b> ${props.name} (id: ${props.route_id})<br/>
+        <b>Type:</b> ${props.type === 0 ? 'Hiking' : props.type === 1 ? 'Skiing' : props.type === 2 ? 'Biking' : 'Kayaking'}<br/>
+        <b>Grade:</b> ${props.grade == -1 ? 'Very Easy' : props.grade === 0 ? 'Easy' : props.grade === 1 ? 'Medium' : props.grade === 2 ? 'Hard' : 'Very Hard'}<br/>
         <a href="${props.url}" target="_blank">Read more</a>
     `;
     event.layer.bindPopup(popupContent, { closeButton: false }).openPopup();
@@ -76,7 +76,7 @@ hikingButton.addEventListener("click", () => {
     bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
     kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
     pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', '0'); // Hiking points
+    const filter = new L.Filter.EQ('type', 0);
     pointLayer.loadFeatures(filter.toGml());
 });
 
@@ -86,7 +86,7 @@ skiingButton.addEventListener("click", () => {
     bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
     kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
     pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', '1'); // Skiing points
+    const filter = new L.Filter.EQ('type', 1);
     pointLayer.loadFeatures(null, filter.toGml());
 });
 
@@ -96,7 +96,7 @@ bikingButton.addEventListener("click", () => {
     bikingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
     kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
     pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', '2'); // Biking points
+    const filter = new L.Filter.EQ('type', 2);
     pointLayer.loadFeatures(filter.toGml());
 });
 
@@ -106,6 +106,6 @@ kayakingButton.addEventListener("click", () => {
     bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
     kayakingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
     pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', '3'); // Kayaking points
+    const filter = new L.Filter.EQ('type', 3);
     pointLayer.loadFeatures(filter.toGml());
 });
