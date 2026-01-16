@@ -10,6 +10,7 @@ with open('resources/geodata/morotur_routes_list.json', 'r') as file:
         feature = geojson.Feature(
             geometry=geojson.Point((float(route['lon']), float(route['lat']))),
             properties={
+                'route_id': route['id'],
                 'name': route['name'],
                 'grade': int(route['grade']),
                 'type': int(route['type']),
