@@ -17396,9 +17396,9 @@ var pointLayer = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().WFST)({
     var grade = geoJsonPoint.properties.grade;
     var icon = leaflet__WEBPACK_IMPORTED_MODULE_0___default().icon({
       iconUrl: "/resources/icons/hikingMarker" + (parseInt(grade) + 1) + ".svg",
-      iconSize: [32, 37],
-      iconAnchor: [16, 37],
-      popupAnchor: [0, -37]
+      iconSize: [21.3, 24.6],
+      iconAnchor: [10.65, 24.6],
+      popupAnchor: [0, -24.6]
     });
     return leaflet__WEBPACK_IMPORTED_MODULE_0___default().marker(latlng, {
       icon: icon
