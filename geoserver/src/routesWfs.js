@@ -98,47 +98,22 @@ pointLayer.on('mouseover', function(event) {
 
 
 // Buttons to toggle route types
-const hikingButton = document.getElementById("toggle_hiking");
-const skiingButton = document.getElementById("toggle_skiing");
-const bikingButton = document.getElementById("toggle_biking");
-const kayakingButton = document.getElementById("toggle_kayaking");
+const toggleButtons = document.querySelectorAll("[data-route-type]");
+toggleButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const routeType = button.getAttribute("data-route-type");
+        
+        // Set toggle indicator
+        toggleButtons.forEach(btn => {
+            btn.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
+            if(btn === button) {
+                btn.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
+            }
+        });
 
-hikingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', 0);
-    pointLayer.loadFeatures(filter.toGml());
-});
-
-skiingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', 1);
-    pointLayer.loadFeatures(null, filter.toGml());
-});
-
-bikingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', 2);
-    pointLayer.loadFeatures(filter.toGml());
-});
-
-kayakingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    pointLayer.clearLayers();
-    const filter = new L.Filter.EQ('type', 3);
-    pointLayer.loadFeatures(filter.toGml());
+        // Load features with filter
+        pointLayer.clearLayers();
+        const filter = new L.Filter.EQ('type', routeType);
+        pointLayer.loadFeatures(filter.toGml());
+    });
 });
