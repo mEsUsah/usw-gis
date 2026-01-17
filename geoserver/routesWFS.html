@@ -70,9 +70,12 @@
             </div>
         </section>
         <section>
-            <h2 class="mt-4 font-medium ">GeoServer WMS</h2>
-            <p>The map demostrates</p>
-            <p class="mt-2">The...</p>
+            <h2 class="mt-4 font-medium ">GeoServer WFS</h2>
+            <p>The map demostrates implementation of a WFS (Web Feature Service) served by GeoServer. Two datasets are provided by the service. Route points and route tracks.</p> 
+            <p class="mt-2">Both datasets were sourced from open API's on <a href="https://morotur.no">morotur.no</a>, manipulated in QGIS, uploaded to PostGIS, and served by GeoServer. The dataset with route pints had to converted from JSON to GeoJSON using a custom Python script before it could be manipulated in QGIS.</p>
+            <p class="mt-2">When the user changes the route type by clicking on the buttons on top of the map, a CQL (Contextual Query Language) filter is applied to limit the results provided by the service, then the map updates accordingly by clearing the current features, and adding the new ones.</p>
+            <p class="mt-2">If the route marker is clicked, a popup will appear showing more information about the route, including route name, route type, difficulty grade, and a link to the complete route description on morotur.no</p>
+            <p class="mt-2">By hovering over a route marker, the route track will be displayed on the map. This is a track provided by the WFS service where a CQL filter is used to only fetch the route track for that route. This track will stay on the map until the user hovers over another route marker.</p>
         </section>
     </main>
     <footer class="bg-[#DE0832] text-white py-8">
