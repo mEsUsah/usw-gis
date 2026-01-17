@@ -42,47 +42,40 @@ wmsRoutePointLayer.setParams({cql_filter: "type='0'"});
 wmsRoutePointLayer.addTo(map);
 
 // Buttons to toggle route types
-const hikingButton = document.getElementById("toggle_hiking");
-const skiingButton = document.getElementById("toggle_skiing");
-const bikingButton = document.getElementById("toggle_biking");
-const kayakingButton = document.getElementById("toggle_kayaking");
+const toggleButtons = document.querySelectorAll("[data-route-type]");
+toggleButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const routeType = button.getAttribute("data-route-type");
+        
+        // Set toggle indicator
+        toggleButtons.forEach(btn => {
+            btn.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
+            if(btn === button) {
+                btn.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
+            }
+        });
 
-
-hikingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    wmsRouteTrackLayer.setParams({cql_filter: "turtype='Fottur'"});
-    wmsRoutePointLayer.setParams({cql_filter: "type='0'"});
+        // Load features with filter
+        wmsRoutePointLayer.setParams({cql_filter: `type='${routeType}'`}); 
+        let turtype = '';
+        switch(routeType) {
+            case '0':
+                turtype = 'Fottur';
+                break;
+            case '1':
+                turtype = 'Skitur';
+                break;
+            case '2':
+                turtype = 'Sykkeltur';
+                break;
+            case '3':
+                turtype = 'Padletur';
+                break;
+        }
+        wmsRouteTrackLayer.setParams({cql_filter: `turtype='${turtype}'`});
+    });
 });
 
-skiingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    wmsRouteTrackLayer.setParams({cql_filter: "turtype='Skitur'"});
-    wmsRoutePointLayer.setParams({cql_filter: "type='1'"});
-});
-
-bikingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    wmsRouteTrackLayer.setParams({cql_filter: "turtype='Sykkeltur'"});
-    wmsRoutePointLayer.setParams({cql_filter: "type='2'"});
-});
-
-kayakingButton.addEventListener("click", () => {
-    hikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    skiingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
-    kayakingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
-    wmsRouteTrackLayer.setParams({cql_filter: "turtype='Padletur'"});
-    wmsRoutePointLayer.setParams({cql_filter: "type='3'"});
-});
-
-const legendUrl = "https://geoserver.haxor.no/geoserver/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=usw%3Amorotur_route_tracks&style=morotur_grade";
+// Add WMS legend
+const legendUrl = "https://geoserver.haxor.no/geoserver/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=usw%3Amorotur_route_points";
 L.wmsLegend(legendUrl);
