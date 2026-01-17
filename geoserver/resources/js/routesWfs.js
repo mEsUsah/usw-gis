@@ -17345,9 +17345,9 @@ var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
-/*!********************!*\
-  !*** ./src/wfs.js ***!
-  \********************/
+/*!**************************!*\
+  !*** ./src/routesWfs.js ***!
+  \**************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! leaflet */ "./node_modules/leaflet/dist/leaflet-src.js");
 /* harmony import */ var leaflet__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(leaflet__WEBPACK_IMPORTED_MODULE_0__);
@@ -17380,8 +17380,8 @@ mapLayer.addTo(map);
 // WFS layer from GeoServer
 var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', '0'); // Hiking points
 
-var pointLayer = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().WFS)({
-  url: 'https://geoserver.haxor.no/geoserver/ows',
+var pointLayer = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().WFST)({
+  url: 'https://geoserver.haxor.no/geoserver/wfs',
   typeNS: 'usw',
   typeName: 'morotur_route_points',
   crs: (leaflet__WEBPACK_IMPORTED_MODULE_0___default().CRS).EPSG4326,
@@ -17392,8 +17392,8 @@ var pointLayer = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().WFS)({
   // safety limit
   filter: filter.toGml()
 }, new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Format).GeoJSON({
-  pointToLayer: function pointToLayer(feature, latlng) {
-    var grade = feature.properties.grade;
+  pointToLayer: function pointToLayer(geoJsonPoint, latlng) {
+    var grade = geoJsonPoint.properties.grade;
     var icon = leaflet__WEBPACK_IMPORTED_MODULE_0___default().icon({
       iconUrl: "/resources/icons/hikingMarker" + (parseInt(grade) + 1) + ".svg",
       iconSize: [32, 37],
@@ -17407,6 +17407,16 @@ var pointLayer = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().WFS)({
 }));
 pointLayer.addTo(map);
 
+// add popup on each feature
+pointLayer.on('click', function (event) {
+  console.log(event.sourceTarget.feature.properties);
+  var props = event.sourceTarget.feature.properties;
+  var popupContent = "\n        <b>Name:</b> ".concat(props.name, " (id: ").concat(props.route_id, ")<br/>\n        <b>Type:</b> ").concat(props.type === 0 ? 'Hiking' : props.type === 1 ? 'Skiing' : props.type === 2 ? 'Biking' : 'Kayaking', "<br/>\n        <b>Grade:</b> ").concat(props.grade == -1 ? 'Very Easy' : props.grade === 0 ? 'Easy' : props.grade === 1 ? 'Medium' : props.grade === 2 ? 'Hard' : 'Very Hard', "<br/>\n        <a href=\"").concat(props.url, "\" target=\"_blank\">Read more</a>\n    ");
+  event.layer.bindPopup(popupContent, {
+    closeButton: false
+  }).openPopup();
+});
+
 // Buttons to toggle route types
 var hikingButton = document.getElementById("toggle_hiking");
 var skiingButton = document.getElementById("toggle_skiing");
@@ -17418,7 +17428,7 @@ hikingButton.addEventListener("click", function () {
   bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
   kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
   pointLayer.clearLayers();
-  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', '0'); // Hiking points
+  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', 0);
   pointLayer.loadFeatures(filter.toGml());
 });
 skiingButton.addEventListener("click", function () {
@@ -17427,7 +17437,7 @@ skiingButton.addEventListener("click", function () {
   bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
   kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
   pointLayer.clearLayers();
-  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', '1'); // Skiing points
+  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', 1);
   pointLayer.loadFeatures(null, filter.toGml());
 });
 bikingButton.addEventListener("click", function () {
@@ -17436,7 +17446,7 @@ bikingButton.addEventListener("click", function () {
   bikingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
   kayakingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
   pointLayer.clearLayers();
-  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', '2'); // Biking points
+  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', 2);
   pointLayer.loadFeatures(filter.toGml());
 });
 kayakingButton.addEventListener("click", function () {
@@ -17445,7 +17455,7 @@ kayakingButton.addEventListener("click", function () {
   bikingButton.querySelector("[data-indicator]").classList.remove(toggleIndicatorClass);
   kayakingButton.querySelector("[data-indicator]").classList.add(toggleIndicatorClass);
   pointLayer.clearLayers();
-  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', '3'); // Kayaking points
+  var filter = new (leaflet__WEBPACK_IMPORTED_MODULE_0___default().Filter).EQ('type', 3);
   pointLayer.loadFeatures(filter.toGml());
 });
 })();
