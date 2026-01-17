@@ -3,6 +3,13 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-wfst';
 
 const toggleIndicatorClass = "bg-[#05ce00]";
+const gradeColors = [
+    "#c0c0c0", // Very Easy
+    "#00984A", // Easy
+    "#0A66B1", // Medium
+    "#DE0832", // Hard
+    "#000000", // Very Hard
+];
 var map = L.map('map_space', {
     'zoomControl': false,
 })
@@ -21,19 +28,17 @@ const mapLayer = L.tileLayer.wms('https://cache.kartverket.no/v1/wms?', { // htt
 });
 mapLayer.addTo(map);
 
-
-// WFS layer from GeoServer
-var filter = new L.Filter.EQ('type', '0'); // Hiking points
-
+// WFS layer for route points
+const pointFilter = new L.Filter.EQ('type', '0'); // Hiking points
 var pointLayer = new L.WFST({
     url: 'https://geoserver.haxor.no/geoserver/wfs',
     typeNS: 'usw',
     typeName: 'morotur_route_points',
     crs: L.CRS.EPSG4326,
     geometryField: 'geom',
-    showExisting: true,                                       // load & show features on init
-    maxFeatures:  500,                                        // safety limit
-    filter: filter.toGml()
+    showExisting: true,
+    maxFeatures:  500,
+    filter: pointFilter.toGml()
 
 
 }, new L.Format.GeoJSON({
@@ -52,15 +57,43 @@ pointLayer.addTo(map);
 
 // add popup on each feature
 pointLayer.on('click', function(event) {
-    console.log(event.sourceTarget.feature.properties);
     const props = event.sourceTarget.feature.properties;
     const popupContent = `
-        <b>Name:</b> ${props.name} (id: ${props.route_id})<br/>
+        <b class="text-base">${props.name}</b><br/>
         <b>Type:</b> ${props.type === 0 ? 'Hiking' : props.type === 1 ? 'Skiing' : props.type === 2 ? 'Biking' : 'Kayaking'}<br/>
         <b>Grade:</b> ${props.grade == -1 ? 'Very Easy' : props.grade === 0 ? 'Easy' : props.grade === 1 ? 'Medium' : props.grade === 2 ? 'Hard' : 'Very Hard'}<br/>
+        <br/>
         <a href="${props.url}" target="_blank">Read more</a>
     `;
     event.layer.bindPopup(popupContent, { closeButton: false }).openPopup();
+});
+
+
+// WFS layer for route tracks
+const routeFilter = new L.Filter.EQ('route_id', '0'); // Hiking routes
+var routeLayer = new L.WFST({
+    url: 'https://geoserver.haxor.no/geoserver/wfs',
+    typeNS: 'usw',
+    typeName: 'morotur_route_tracks',
+    crs: L.CRS.EPSG4326,
+    geometryField: 'geom',
+    showExisting: true,
+    maxFeatures:  1,                                        
+    filter: routeFilter.toGml(),
+    style: {
+        color: "#000000",
+        weight: 3,
+        opacity: 0.7,
+    }
+});
+routeLayer.addTo(map);
+
+pointLayer.on('mouseover', function(event) {
+    routeLayer.clearLayers();
+    const routeId = event.sourceTarget.feature.properties.route_id;
+    const filter = new L.Filter.EQ('route_id', routeId);
+    routeLayer.options.style.color = gradeColors[event.sourceTarget.feature.properties.grade + 1];
+    routeLayer.loadFeatures(filter.toGml());
 });
 
 
