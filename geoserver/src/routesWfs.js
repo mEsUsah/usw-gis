@@ -41,9 +41,9 @@ var pointLayer = new L.WFST({
         const grade = geoJsonPoint.properties.grade;
         const icon = L.icon({ 
             iconUrl: "/resources/icons/hikingMarker" + (parseInt(grade) + 1) + ".svg", 
-            iconSize: [16, 18.5],
-            iconAnchor: [8, 18.5],
-            popupAnchor: [0, -18.5],
+            iconSize: [21.3, 24.6],
+            iconAnchor: [10.65, 24.6],
+            popupAnchor: [0, -24.6],
         });
         return L.marker(latlng, { icon });
     }
