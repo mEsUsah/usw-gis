@@ -17,7 +17,7 @@
     </header>
     <main class="m-4 lg:m-8 flex-grow">
         <h2 class="text-lg lg:text-2xl font-medium">Technology</h2>
-        <p class=" mb-4">Technology is experimented with during my studies at the University of South Wales 2025/2026</p>
+        <p class=" mb-4">The technology I experimented with during my studies at the University of South Wales 2025/2026</p>
         <ul>
             <li>📁<a href="/googleMapsApi" class="text-[#DE0832] hover:underline">Google Maps API</a></li>
             <li>📁<a href="/openLayers" class="text-[#DE0832] hover:underline">OpenLayers</a></li>
